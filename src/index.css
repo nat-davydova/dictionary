@@ -1,1 +1,8 @@
 @import '../node_modules/modern-normalize/modern-normalize.css';
+
+html,
+body,
+#root,
+.App {
+    min-height: 100vh;
+}
