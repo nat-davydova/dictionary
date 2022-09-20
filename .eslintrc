@@ -10,5 +10,14 @@
     "plugin:prettier/recommended",
     "plugin:import/errors"
   ],
-  "plugins": ["@typescript-eslint", "prettier", "promise", "import"]
+  "plugins": ["@typescript-eslint", "prettier", "promise", "import"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    },
+    "import/extensions": 0,
+    "import/no-unresolved": 0
+  }
 }
