@@ -8,8 +8,10 @@ function App() {
     <div className="App">
       <Container maxWidth="md">
         <Styled.AppWrapper>
-          <TextField label="Search a word" variant="outlined" fullWidth />
-          <Button variant="contained">Search</Button>
+          <Styled.SearchWrapper>
+            <TextField label="Search a word" variant="outlined" fullWidth />
+            <Button variant="contained">Search</Button>
+          </Styled.SearchWrapper>
         </Styled.AppWrapper>
       </Container>
     </div>
