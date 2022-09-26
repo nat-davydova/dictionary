@@ -2,6 +2,7 @@ import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
+import Paper from "@mui/material/Paper";
 import * as Styled from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 
@@ -28,8 +29,6 @@ function App() {
       options
     ).then((data) => data.json());
     const mappedResponse = mapResponseToInterface(response);
-
-    console.log(mappedResponse);
   }
 
   return (
@@ -48,6 +47,7 @@ function App() {
             </Button>
           </Styled.SearchWrapper>
         </Styled.AppWrapper>
+        <Styled.DefinitionWrapper>Wow</Styled.DefinitionWrapper>
       </Container>
     </div>
   );
