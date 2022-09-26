@@ -13,16 +13,16 @@ const options = {
 };
 
 function App() {
-  const [currentWord, setCurrentWord] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
-    fetch(`https://wordsapiv1.p.rapidapi.com/words/${currentWord}`, options)
+    fetch(`https://wordsapiv1.p.rapidapi.com/words/${searchQuery}`, options)
       .then((data) => data.json())
       .then((data) => console.log(data));
-  }, [currentWord]);
+  }, [searchQuery]);
 
   function onSearchHandler(event: React.ChangeEvent<HTMLInputElement>): void {
-    setCurrentWord(event.target.value);
+    setSearchQuery(event.target.value);
   }
 
   return (
