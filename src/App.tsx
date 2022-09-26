@@ -15,14 +15,16 @@ const options = {
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  useEffect(() => {
+  function onSearchInputHandler(
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void {
+    setSearchQuery(event.target.value);
+  }
+
+  function onSearchSubmitHandler() {
     fetch(`https://wordsapiv1.p.rapidapi.com/words/${searchQuery}`, options)
       .then((data) => data.json())
       .then((data) => console.log(data));
-  }, [searchQuery]);
-
-  function onSearchHandler(event: React.ChangeEvent<HTMLInputElement>): void {
-    setSearchQuery(event.target.value);
   }
 
   return (
@@ -34,9 +36,11 @@ function App() {
               label="Search a word"
               variant="outlined"
               fullWidth
-              onChange={onSearchHandler}
+              onChange={onSearchInputHandler}
             />
-            <Button variant="contained">Search</Button>
+            <Button variant="contained" onClick={onSearchSubmitHandler}>
+              Search
+            </Button>
           </Styled.SearchWrapper>
         </Styled.AppWrapper>
       </Container>
