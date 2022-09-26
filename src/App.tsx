@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Styled from "./App.styles";
 
 const options = {
@@ -13,14 +13,16 @@ const options = {
 };
 
 function App() {
+  const [currentWord, setCurrentWord] = useState<string>("");
+
   useEffect(() => {
-    fetch("https://wordsapiv1.p.rapidapi.com/words/hatchback", options)
+    fetch(`https://wordsapiv1.p.rapidapi.com/words/${currentWord}`, options)
       .then((data) => data.json())
       .then((data) => console.log(data));
-  }, []);
+  }, [currentWord]);
 
   function onSearchHandler(event: React.ChangeEvent<HTMLInputElement>): void {
-    console.log(event.target.value);
+    setCurrentWord(event.target.value);
   }
 
   return (
