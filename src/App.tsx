@@ -1,8 +1,9 @@
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as Styled from "./App.styles";
+import { mapResponseToInterface } from "./utils";
 
 const options = {
   method: "GET",
@@ -26,7 +27,9 @@ function App() {
       `https://wordsapiv1.p.rapidapi.com/words/${searchQuery}`,
       options
     ).then((data) => data.json());
-    console.log(response);
+    const mappedResponse = mapResponseToInterface(response);
+
+    console.log(mappedResponse);
   }
 
   return (
