@@ -7,6 +7,7 @@ export interface WordDefinition {
 }
 
 export interface Word {
+  word: string;
   transcription?: string;
   definitions?: WordDefinition[];
 }
