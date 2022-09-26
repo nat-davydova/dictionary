@@ -21,10 +21,12 @@ function App() {
     setSearchQuery(event.target.value);
   }
 
-  function onSearchSubmitHandler() {
-    fetch(`https://wordsapiv1.p.rapidapi.com/words/${searchQuery}`, options)
-      .then((data) => data.json())
-      .then((data) => console.log(data));
+  async function onSearchSubmitHandler() {
+    const response = await fetch(
+      `https://wordsapiv1.p.rapidapi.com/words/${searchQuery}`,
+      options
+    ).then((data) => data.json());
+    console.log(response);
   }
 
   return (
