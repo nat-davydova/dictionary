@@ -36,6 +36,12 @@ export const DefinitionNumber = styled("p")`
   background-color: ${theme.palette.primary.main};
 `;
 
+export const DefinitionCoreWrapper = styled("div")`
+  & > *:not(:last-child) {
+    margin-right: ${theme.spacing(1)};
+  }
+`;
+
 export const Transcription = styled(Typography)`
   margin-bottom: ${theme.spacing(3)};
 ` as typeof Typography;

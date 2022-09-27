@@ -41,13 +41,13 @@ function App() {
 
     return definitions.map((definition, index) => (
       <Styled.DefinitionWrapper>
-        <Stack direction="row" spacing={1} alignItems="center">
+        <Styled.DefinitionCoreWrapper>
           <Styled.DefinitionNumber>{index + 1}</Styled.DefinitionNumber>
           <Styled.PartOfSpeech fontStyle="italic">
             {definition.partOfSpeech}
           </Styled.PartOfSpeech>
           <Typography>{definition.definition}</Typography>
-        </Stack>
+        </Styled.DefinitionCoreWrapper>
         <Typography>
           {definition.examples?.map((example) => example)}
         </Typography>
