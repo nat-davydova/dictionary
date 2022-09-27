@@ -40,8 +40,8 @@ function App() {
 
     return definitions.map((definition, index) => (
       <>
-        <Stack direction="row" spacing={1}>
-          <Typography>{index + 1}</Typography>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Styled.DefinitionNumber>{index + 1}</Styled.DefinitionNumber>
           <Typography>{definition.partOfSpeech}</Typography>
           <Typography>{definition.definition}</Typography>
         </Stack>
