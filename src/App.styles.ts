@@ -1,4 +1,4 @@
-import { Box, createTheme, styled, Typography } from "@mui/material";
+import { Box, createTheme, Stack, styled, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 
 const theme = createTheme();
@@ -38,6 +38,7 @@ export const DefinitionNumber = styled("p")`
 
 export const DefinitionCoreWrapper = styled("div")`
   & > *:not(:last-child) {
+    display: inline-flex;
     margin-right: ${theme.spacing(1)};
   }
 `;
@@ -48,4 +49,12 @@ export const Transcription = styled(Typography)`
 
 export const PartOfSpeech = styled(Typography)`
   color: ${theme.palette.grey["500"]};
+`;
+
+export const Definition = styled(Typography)`
+  display: inline;
+`;
+
+export const Example = styled(Typography)`
+  margin-top: ${theme.spacing(0.5)};
 `;

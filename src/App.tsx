@@ -2,12 +2,12 @@ import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
-import { Typography } from "@mui/material";
-import Stack from "@mui/material/Stack";
+import { Stack, Typography } from "@mui/material";
+import { v4 as uuid } from "uuid";
 import * as Styled from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { Word, WordDefinition } from "./types";
-import { PartOfSpeech, Transcription } from "./App.styles";
+import { Example } from "./App.styles";
 
 const options = {
   method: "GET",
@@ -40,17 +40,19 @@ function App() {
     if (!definitions) return <></>;
 
     return definitions.map((definition, index) => (
-      <Styled.DefinitionWrapper>
+      <Styled.DefinitionWrapper key={uuid()}>
         <Styled.DefinitionCoreWrapper>
           <Styled.DefinitionNumber>{index + 1}</Styled.DefinitionNumber>
           <Styled.PartOfSpeech fontStyle="italic">
             {definition.partOfSpeech}
           </Styled.PartOfSpeech>
-          <Typography>{definition.definition}</Typography>
+          <Styled.Definition>{definition.definition}</Styled.Definition>
         </Styled.DefinitionCoreWrapper>
-        <Typography>
-          {definition.examples?.map((example) => example)}
-        </Typography>
+        {definition.examples?.map((example) => (
+          <Styled.Example key={uuid()} fontStyle="italic">
+            {example}
+          </Styled.Example>
+        ))}
         <Typography>
           {definition.synonyms?.map((synonym) => synonym)}
         </Typography>
