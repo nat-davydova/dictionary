@@ -39,6 +39,7 @@ function App() {
   function renderWordDefinitions(definitions?: WordDefinition[]) {
     if (!definitions) return <></>;
 
+    // TODO move synonims and antonyms into a common component
     return definitions.map((definition, index) => (
       <Styled.DefinitionWrapper key={uuid()}>
         <Styled.DefinitionCoreWrapper>
@@ -53,9 +54,18 @@ function App() {
             {example}
           </Styled.Example>
         ))}
-        <Typography>
-          {definition.synonyms?.map((synonym) => synonym)}
-        </Typography>
+        {definition.synonyms?.length && (
+          <Styled.AdditionalWrapper>
+            <Typography fontWeight="600" component="span">
+              Synonyms:
+            </Typography>
+            <Styled.AdditionalTermsWrapper>
+              {definition.synonyms?.map((synonym) => (
+                <Typography component="span">{synonym}</Typography>
+              ))}
+            </Styled.AdditionalTermsWrapper>
+          </Styled.AdditionalWrapper>
+        )}
         <Typography>
           {definition.antonyms?.map((antonym) => antonym)}
         </Typography>
