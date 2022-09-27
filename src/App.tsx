@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import { Typography } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import * as Styled from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { Word, WordDefinition } from "./types";
@@ -39,9 +40,11 @@ function App() {
 
     return definitions.map((definition, index) => (
       <>
-        <Typography>
-          {index + 1} {definition.partOfSpeech} {definition.definition}
-        </Typography>
+        <Stack direction="row" spacing={1}>
+          <Typography>{index + 1}</Typography>
+          <Typography>{definition.partOfSpeech}</Typography>
+          <Typography>{definition.definition}</Typography>
+        </Stack>
         <Typography>
           {definition.examples?.map((example) => example)}
         </Typography>
@@ -71,7 +74,7 @@ function App() {
             </Button>
           </Styled.SearchWrapper>
         </Styled.AppWrapper>
-        {currentWord && (
+        {currentWord?.word && (
           <Styled.DefinitionWrapper>
             <Typography variant="h4" component="h1">
               {currentWord.word}
