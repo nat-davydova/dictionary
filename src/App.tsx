@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 import * as Styled from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { Word, WordDefinition } from "./types";
+import { PartOfSpeech } from "./App.styles";
 
 const options = {
   method: "GET",
@@ -39,10 +40,12 @@ function App() {
     if (!definitions) return <></>;
 
     return definitions.map((definition, index) => (
-      <>
+      <Styled.DefinitionWrapper>
         <Stack direction="row" spacing={1} alignItems="center">
           <Styled.DefinitionNumber>{index + 1}</Styled.DefinitionNumber>
-          <Typography>{definition.partOfSpeech}</Typography>
+          <Styled.PartOfSpeech fontStyle="italic">
+            {definition.partOfSpeech}
+          </Styled.PartOfSpeech>
           <Typography>{definition.definition}</Typography>
         </Stack>
         <Typography>
@@ -54,7 +57,7 @@ function App() {
         <Typography>
           {definition.antonyms?.map((antonym) => antonym)}
         </Typography>
-      </>
+      </Styled.DefinitionWrapper>
     ));
   }
 
@@ -75,7 +78,7 @@ function App() {
           </Styled.SearchWrapper>
         </Styled.AppWrapper>
         {currentWord?.word && (
-          <Styled.DefinitionWrapper>
+          <Styled.WordWrapper>
             <Typography variant="h4" component="h1">
               {currentWord.word}
             </Typography>
@@ -83,7 +86,7 @@ function App() {
               [{currentWord.transcription}]
             </Typography>
             {renderWordDefinitions(currentWord.definitions)}
-          </Styled.DefinitionWrapper>
+          </Styled.WordWrapper>
         )}
       </Container>
     </div>
