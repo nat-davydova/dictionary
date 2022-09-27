@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import * as Styled from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { Word, WordDefinition } from "./types";
-import { PartOfSpeech } from "./App.styles";
+import { PartOfSpeech, Transcription } from "./App.styles";
 
 const options = {
   method: "GET",
@@ -82,9 +82,9 @@ function App() {
             <Typography variant="h4" component="h1">
               {currentWord.word}
             </Typography>
-            <Typography variant="subtitle1" component="p">
+            <Styled.Transcription variant="subtitle1" component="p">
               [{currentWord.transcription}]
-            </Typography>
+            </Styled.Transcription>
             {renderWordDefinitions(currentWord.definitions)}
           </Styled.WordWrapper>
         )}

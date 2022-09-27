@@ -12,7 +12,7 @@ export const SearchWrapper = styled(Box)`
 `;
 
 export const WordWrapper = styled(Paper)`
-  margin-top: 30px;
+  margin-top: ${theme.spacing(4)};
   padding: ${theme.spacing(3)};
 `;
 
@@ -35,6 +35,10 @@ export const DefinitionNumber = styled("p")`
   border-radius: 50%;
   background-color: ${theme.palette.primary.main};
 `;
+
+export const Transcription = styled(Typography)`
+  margin-bottom: ${theme.spacing(3)};
+` as typeof Typography;
 
 export const PartOfSpeech = styled(Typography)`
   color: ${theme.palette.grey["500"]};
