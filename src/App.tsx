@@ -2,12 +2,11 @@ import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import * as Styled from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { Word, WordDefinition } from "./types";
-import { Example } from "./App.styles";
 
 const options = {
   method: "GET",
@@ -21,6 +20,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -30,13 +30,28 @@ function App() {
 
   async function onSearchSubmitHandler() {
     setIsLoading(true);
-    const response = await fetch(
-      `https://wordsapiv1.p.rapidapi.com/words/${searchQuery}`,
-      options
-    ).then((data) => data.json());
-    setIsLoading(false);
-    const mappedResponse = mapResponseToInterface(response);
-    setCurrentWord(mappedResponse);
+    setIsError(false);
+
+    try {
+      const response = await fetch(
+        `https://wordsapiv1.p.rapidapi.com/words/${searchQuery}`,
+        options
+      );
+
+      setIsLoading(false);
+
+      if (!response.ok) {
+        setIsError(true);
+        return;
+      }
+
+      const responseToJson = await response.json();
+      const mappedResponse = mapResponseToInterface(responseToJson);
+      setCurrentWord(mappedResponse);
+    } catch (e) {
+      setIsLoading(false);
+      setIsError(true);
+    }
   }
 
   function renderWordDefinitions(definitions?: WordDefinition[]) {
@@ -110,7 +125,12 @@ function App() {
               Loading...
             </Typography>
           )}
-          {currentWord?.word && !isLoading && (
+          {isError && (
+            <Styled.Error variant="h5" component="p">
+              Sorry, something went wrong
+            </Styled.Error>
+          )}
+          {currentWord?.word && !isLoading && !isError && (
             <>
               <Styled.WordBriefWrapper>
                 <Typography variant="h4" component="h1">

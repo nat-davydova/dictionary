@@ -79,3 +79,7 @@ export const AdditionalTermsWrapper = styled("div")`
     }
   }
 `;
+
+export const Error = styled(Typography)`
+  color: ${theme.palette.error.main};
+` as typeof Typography;
