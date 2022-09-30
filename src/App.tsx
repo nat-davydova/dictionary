@@ -61,14 +61,27 @@ function App() {
             </Typography>
             <Styled.AdditionalTermsWrapper>
               {definition.synonyms?.map((synonym) => (
-                <Typography component="span">{synonym}</Typography>
+                <Typography key={uuid()} component="span">
+                  {synonym}
+                </Typography>
               ))}
             </Styled.AdditionalTermsWrapper>
           </Styled.AdditionalWrapper>
         )}
-        <Typography>
-          {definition.antonyms?.map((antonym) => antonym)}
-        </Typography>
+        {definition.antonyms?.length && (
+          <Styled.AdditionalWrapper>
+            <Typography fontWeight="600" component="span">
+              Antonyms:
+            </Typography>
+            <Styled.AdditionalTermsWrapper>
+              {definition.antonyms?.map((synonym) => (
+                <Typography key={uuid()} component="span">
+                  {synonym}
+                </Typography>
+              ))}
+            </Styled.AdditionalTermsWrapper>
+          </Styled.AdditionalWrapper>
+        )}
       </Styled.DefinitionWrapper>
     ));
   }
@@ -94,9 +107,11 @@ function App() {
             <Typography variant="h4" component="h1">
               {currentWord.word}
             </Typography>
-            <Styled.Transcription variant="subtitle1" component="p">
-              [{currentWord.transcription}]
-            </Styled.Transcription>
+            {currentWord.transcription && (
+              <Styled.Transcription variant="subtitle1" component="p">
+                [{currentWord.transcription}]
+              </Styled.Transcription>
+            )}
             {renderWordDefinitions(currentWord.definitions)}
           </Styled.WordWrapper>
         )}
