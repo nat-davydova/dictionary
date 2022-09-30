@@ -43,9 +43,9 @@ export const DefinitionCoreWrapper = styled("div")`
   }
 `;
 
-export const Transcription = styled(Typography)`
+export const WordBriefWrapper = styled(`div`)`
   margin-bottom: ${theme.spacing(3)};
-` as typeof Typography;
+`;
 
 export const PartOfSpeech = styled(Typography)`
   color: ${theme.palette.grey["500"]};

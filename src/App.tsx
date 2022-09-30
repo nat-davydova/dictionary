@@ -39,7 +39,6 @@ function App() {
   function renderWordDefinitions(definitions?: WordDefinition[]) {
     if (!definitions) return <></>;
 
-    // TODO move synonims and antonyms into a common component
     return definitions.map((definition, index) => (
       <Styled.DefinitionWrapper key={uuid()}>
         <Styled.DefinitionCoreWrapper>
@@ -104,14 +103,16 @@ function App() {
         </Styled.AppWrapper>
         {currentWord?.word && (
           <Styled.WordWrapper>
-            <Typography variant="h4" component="h1">
-              {currentWord.word}
-            </Typography>
-            {currentWord.transcription && (
-              <Styled.Transcription variant="subtitle1" component="p">
-                [{currentWord.transcription}]
-              </Styled.Transcription>
-            )}
+            <Styled.WordBriefWrapper>
+              <Typography variant="h4" component="h1">
+                {currentWord.word}
+              </Typography>
+              {currentWord.transcription && (
+                <Typography variant="subtitle1" component="p">
+                  [{currentWord.transcription}]
+                </Typography>
+              )}
+            </Styled.WordBriefWrapper>
             {renderWordDefinitions(currentWord.definitions)}
           </Styled.WordWrapper>
         )}
