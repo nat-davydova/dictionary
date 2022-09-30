@@ -20,6 +20,7 @@ const options = {
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -28,10 +29,12 @@ function App() {
   }
 
   async function onSearchSubmitHandler() {
+    setIsLoading(true);
     const response = await fetch(
       `https://wordsapiv1.p.rapidapi.com/words/${searchQuery}`,
       options
     ).then((data) => data.json());
+    setIsLoading(false);
     const mappedResponse = mapResponseToInterface(response);
     setCurrentWord(mappedResponse);
   }
@@ -101,21 +104,28 @@ function App() {
             </Button>
           </Styled.SearchWrapper>
         </Styled.AppWrapper>
-        {currentWord?.word && (
-          <Styled.WordWrapper>
-            <Styled.WordBriefWrapper>
-              <Typography variant="h4" component="h1">
-                {currentWord.word}
-              </Typography>
-              {currentWord.transcription && (
-                <Typography variant="subtitle1" component="p">
-                  [{currentWord.transcription}]
+        <Styled.WordWrapper>
+          {isLoading && (
+            <Typography variant="h5" component="p">
+              Loading...
+            </Typography>
+          )}
+          {currentWord?.word && !isLoading && (
+            <>
+              <Styled.WordBriefWrapper>
+                <Typography variant="h4" component="h1">
+                  {currentWord.word}
                 </Typography>
-              )}
-            </Styled.WordBriefWrapper>
-            {renderWordDefinitions(currentWord.definitions)}
-          </Styled.WordWrapper>
-        )}
+                {currentWord.transcription && (
+                  <Typography variant="subtitle1" component="p">
+                    [{currentWord.transcription}]
+                  </Typography>
+                )}
+              </Styled.WordBriefWrapper>
+              {renderWordDefinitions(currentWord.definitions)}
+            </>
+          )}
+        </Styled.WordWrapper>
       </Container>
     </div>
   );
