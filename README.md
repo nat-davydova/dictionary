@@ -12,3 +12,12 @@
 * synonyms (optional);
 * antonyms (optional);
 
+### Plans for v0.2.0
+
+- [ ] add all the states of the word (initial/loading/loaded/error) to an enum;
+- [ ] split and decompose large `definition` part (also synonyms-antonyms outsource as common part);
+- [ ] add better loader;
+- [ ] add better error notification from MUI and better 'no such word' thing;
+- [ ] add search on enter;
+- [ ] add footer;
+- [ ] remove all the `Styled` prefixes;
