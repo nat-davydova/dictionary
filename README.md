@@ -1,4 +1,4 @@
-# dictionary v0.1.0 (in progress)
+# dictionary v0.1.0 (in progress) - ⚠️ bad code for now, it's a very draft
 
 ⚙️ user can search words through WordsAPI <br/>
 ⚙️ user see very basic loader while request is loading <br/>
