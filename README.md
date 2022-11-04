@@ -22,3 +22,6 @@
 - [x] add footer;
 - [x] change `Styled` prefixes to `S`;
 - [x] fix bug with empty word container;
+
+### Plans for v0.3.0
+- [ ] fix bug with searching if input is empty;
