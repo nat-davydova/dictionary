@@ -21,6 +21,8 @@ function App() {
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [isContentContainerVisible, setIsContentContainerVisible] =
+    useState<boolean>(false);
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -31,6 +33,7 @@ function App() {
   async function onSearchSubmitHandler() {
     setIsLoading(true);
     setIsError(false);
+    setIsContentContainerVisible(true);
 
     try {
       const response = await fetch(
@@ -51,6 +54,12 @@ function App() {
     } catch (e) {
       setIsLoading(false);
       setIsError(true);
+    }
+  }
+
+  function onSearchKeydownHandler(event: React.KeyboardEvent) {
+    if (event.key === "Enter") {
+      onSearchSubmitHandler();
     }
   }
 
@@ -113,39 +122,42 @@ function App() {
               variant="outlined"
               fullWidth
               onChange={onSearchInputHandler}
+              onKeyDown={onSearchKeydownHandler}
             />
             <Button variant="contained" onClick={onSearchSubmitHandler}>
               Search
             </Button>
           </S.SearchWrapper>
         </S.AppWrapper>
-        <S.WordWrapper>
-          {isLoading && (
-            <Typography variant="h5" component="p">
-              Loading...
-            </Typography>
-          )}
-          {isError && (
-            <S.Error variant="h5" component="p">
-              Sorry, something went wrong
-            </S.Error>
-          )}
-          {currentWord?.word && !isLoading && !isError && (
-            <>
-              <S.WordBriefWrapper>
-                <Typography variant="h4" component="h1">
-                  {currentWord.word}
-                </Typography>
-                {currentWord.transcription && (
-                  <Typography variant="subtitle1" component="p">
-                    [{currentWord.transcription}]
+        {isContentContainerVisible && (
+          <S.WordWrapper>
+            {isLoading && (
+              <Typography variant="h5" component="p">
+                Loading...
+              </Typography>
+            )}
+            {isError && (
+              <S.Error variant="h5" component="p">
+                Sorry, something went wrong
+              </S.Error>
+            )}
+            {currentWord?.word && !isLoading && !isError && (
+              <>
+                <S.WordBriefWrapper>
+                  <Typography variant="h4" component="h1">
+                    {currentWord.word}
                   </Typography>
-                )}
-              </S.WordBriefWrapper>
-              {renderWordDefinitions(currentWord.definitions)}
-            </>
-          )}
-        </S.WordWrapper>
+                  {currentWord.transcription && (
+                    <Typography variant="subtitle1" component="p">
+                      [{currentWord.transcription}]
+                    </Typography>
+                  )}
+                </S.WordBriefWrapper>
+                {renderWordDefinitions(currentWord.definitions)}
+              </>
+            )}
+          </S.WordWrapper>
+        )}
       </Container>
       <S.Footer>
         <Container maxWidth="md">
