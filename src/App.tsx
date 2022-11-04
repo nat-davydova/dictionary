@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import { v4 as uuid } from "uuid";
-import * as Styled from "./App.styles";
+import * as S from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { Word, WordDefinition } from "./types";
 
@@ -58,56 +58,56 @@ function App() {
     if (!definitions) return <></>;
 
     return definitions.map((definition, index) => (
-      <Styled.DefinitionWrapper key={uuid()}>
-        <Styled.DefinitionCoreWrapper>
-          <Styled.DefinitionNumber>{index + 1}</Styled.DefinitionNumber>
-          <Styled.PartOfSpeech fontStyle="italic">
+      <S.DefinitionWrapper key={uuid()}>
+        <S.DefinitionCoreWrapper>
+          <S.DefinitionNumber>{index + 1}</S.DefinitionNumber>
+          <S.PartOfSpeech fontStyle="italic">
             {definition.partOfSpeech}
-          </Styled.PartOfSpeech>
-          <Styled.Definition>{definition.definition}</Styled.Definition>
-        </Styled.DefinitionCoreWrapper>
+          </S.PartOfSpeech>
+          <S.Definition>{definition.definition}</S.Definition>
+        </S.DefinitionCoreWrapper>
         {definition.examples?.map((example) => (
-          <Styled.Example key={uuid()} fontStyle="italic">
+          <S.Example key={uuid()} fontStyle="italic">
             {example}
-          </Styled.Example>
+          </S.Example>
         ))}
         {definition.synonyms?.length && (
-          <Styled.AdditionalWrapper>
+          <S.AdditionalWrapper>
             <Typography fontWeight="600" component="span">
               Synonyms:
             </Typography>
-            <Styled.AdditionalTermsWrapper>
+            <S.AdditionalTermsWrapper>
               {definition.synonyms?.map((synonym) => (
                 <Typography key={uuid()} component="span">
                   {synonym}
                 </Typography>
               ))}
-            </Styled.AdditionalTermsWrapper>
-          </Styled.AdditionalWrapper>
+            </S.AdditionalTermsWrapper>
+          </S.AdditionalWrapper>
         )}
         {definition.antonyms?.length && (
-          <Styled.AdditionalWrapper>
+          <S.AdditionalWrapper>
             <Typography fontWeight="600" component="span">
               Antonyms:
             </Typography>
-            <Styled.AdditionalTermsWrapper>
+            <S.AdditionalTermsWrapper>
               {definition.antonyms?.map((synonym) => (
                 <Typography key={uuid()} component="span">
                   {synonym}
                 </Typography>
               ))}
-            </Styled.AdditionalTermsWrapper>
-          </Styled.AdditionalWrapper>
+            </S.AdditionalTermsWrapper>
+          </S.AdditionalWrapper>
         )}
-      </Styled.DefinitionWrapper>
+      </S.DefinitionWrapper>
     ));
   }
 
   return (
     <div className="App">
       <Container maxWidth="md">
-        <Styled.AppWrapper>
-          <Styled.SearchWrapper>
+        <S.AppWrapper>
+          <S.SearchWrapper>
             <TextField
               label="Search a word"
               variant="outlined"
@@ -117,22 +117,22 @@ function App() {
             <Button variant="contained" onClick={onSearchSubmitHandler}>
               Search
             </Button>
-          </Styled.SearchWrapper>
-        </Styled.AppWrapper>
-        <Styled.WordWrapper>
+          </S.SearchWrapper>
+        </S.AppWrapper>
+        <S.WordWrapper>
           {isLoading && (
             <Typography variant="h5" component="p">
               Loading...
             </Typography>
           )}
           {isError && (
-            <Styled.Error variant="h5" component="p">
+            <S.Error variant="h5" component="p">
               Sorry, something went wrong
-            </Styled.Error>
+            </S.Error>
           )}
           {currentWord?.word && !isLoading && !isError && (
             <>
-              <Styled.WordBriefWrapper>
+              <S.WordBriefWrapper>
                 <Typography variant="h4" component="h1">
                   {currentWord.word}
                 </Typography>
@@ -141,11 +141,11 @@ function App() {
                     [{currentWord.transcription}]
                   </Typography>
                 )}
-              </Styled.WordBriefWrapper>
+              </S.WordBriefWrapper>
               {renderWordDefinitions(currentWord.definitions)}
             </>
           )}
-        </Styled.WordWrapper>
+        </S.WordWrapper>
       </Container>
     </div>
   );
