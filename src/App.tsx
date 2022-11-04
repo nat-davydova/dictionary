@@ -147,6 +147,11 @@ function App() {
           )}
         </S.WordWrapper>
       </Container>
+      <S.Footer>
+        <Container maxWidth="md">
+          <p>Natalia Davydova - 2022</p>
+        </Container>
+      </S.Footer>
     </div>
   );
 }
