@@ -21,3 +21,4 @@
 - [ ] add search on enter;
 - [ ] add footer;
 - [ ] remove all the `Styled` prefixes;
+- [ ] fix bug with empty word container;
