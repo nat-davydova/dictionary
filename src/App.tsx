@@ -114,44 +114,45 @@ function App() {
 
   return (
     <div className="App">
-      <Container maxWidth="md">
-        <S.AppWrapper>
+      <S.AppWrapper>
+        <Container maxWidth="md">
           <SearchBar
             onSearchInputHandler={onSearchInputHandler}
             onSearchKeydownHandler={onSearchKeydownHandler}
             onSearchSubmitHandler={onSearchSubmitHandler}
           />
-        </S.AppWrapper>
-        {isContentContainerVisible && (
-          <S.WordWrapper>
-            {isLoading && (
-              <Typography variant="h5" component="p">
-                Loading...
-              </Typography>
-            )}
-            {isError && (
-              <S.Error variant="h5" component="p">
-                Sorry, something went wrong
-              </S.Error>
-            )}
-            {currentWord?.word && !isLoading && !isError && (
-              <>
-                <S.WordBriefWrapper>
-                  <Typography variant="h4" component="h1">
-                    {currentWord.word}
-                  </Typography>
-                  {currentWord.transcription && (
-                    <Typography variant="subtitle1" component="p">
-                      [{currentWord.transcription}]
+
+          {isContentContainerVisible && (
+            <S.WordWrapper>
+              {isLoading && (
+                <Typography variant="h5" component="p">
+                  Loading...
+                </Typography>
+              )}
+              {isError && (
+                <S.Error variant="h5" component="p">
+                  Sorry, something went wrong
+                </S.Error>
+              )}
+              {currentWord?.word && !isLoading && !isError && (
+                <>
+                  <S.WordBriefWrapper>
+                    <Typography variant="h4" component="h1">
+                      {currentWord.word}
                     </Typography>
-                  )}
-                </S.WordBriefWrapper>
-                {renderWordDefinitions(currentWord.definitions)}
-              </>
-            )}
-          </S.WordWrapper>
-        )}
-      </Container>
+                    {currentWord.transcription && (
+                      <Typography variant="subtitle1" component="p">
+                        [{currentWord.transcription}]
+                      </Typography>
+                    )}
+                  </S.WordBriefWrapper>
+                  {renderWordDefinitions(currentWord.definitions)}
+                </>
+              )}
+            </S.WordWrapper>
+          )}
+        </Container>
+      </S.AppWrapper>
       <Footer />
     </div>
   );
