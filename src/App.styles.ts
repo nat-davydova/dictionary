@@ -7,10 +7,6 @@ export const AppWrapper = styled("div")`
   margin-top: ${theme.spacing(7)};
 `;
 
-export const SearchWrapper = styled(Box)`
-  display: flex;
-`;
-
 export const WordWrapper = styled(Paper)`
   margin-top: ${theme.spacing(4)};
   padding: ${theme.spacing(3)};

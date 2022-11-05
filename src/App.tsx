@@ -1,6 +1,4 @@
 import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import { v4 as uuid } from "uuid";
@@ -8,6 +6,7 @@ import * as S from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { Word, WordDefinition } from "./types";
 import { Footer } from "./components/Footer";
+import { SearchBar } from "./components/SearchBar";
 
 const options = {
   method: "GET",
@@ -117,18 +116,11 @@ function App() {
     <div className="App">
       <Container maxWidth="md">
         <S.AppWrapper>
-          <S.SearchWrapper>
-            <TextField
-              label="Search a word"
-              variant="outlined"
-              fullWidth
-              onChange={onSearchInputHandler}
-              onKeyDown={onSearchKeydownHandler}
-            />
-            <Button variant="contained" onClick={onSearchSubmitHandler}>
-              Search
-            </Button>
-          </S.SearchWrapper>
+          <SearchBar
+            onSearchInputHandler={onSearchInputHandler}
+            onSearchKeydownHandler={onSearchKeydownHandler}
+            onSearchSubmitHandler={onSearchSubmitHandler}
+          />
         </S.AppWrapper>
         {isContentContainerVisible && (
           <S.WordWrapper>
