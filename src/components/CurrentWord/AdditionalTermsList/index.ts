@@ -1,0 +1,1 @@
+export { AdditionalTermsList } from "./AdditionalTermsList";

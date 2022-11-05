@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 const theme = createTheme();
 
 export const AppWrapper = styled("div")`
-  margin-top: ${theme.spacing(7)};
+  margin: ${theme.spacing(7)} 0;
 `;
 
 export const WordWrapper = styled(Paper)`

@@ -3,6 +3,7 @@ import React from "react";
 import { v4 as uuid } from "uuid";
 import * as S from "./CurrentWord.styles";
 import { IWord, IWordDefinition } from "../../types";
+import { AdditionalTermsList } from "./AdditionalTermsList";
 
 interface ICurrentWord {
   currentWord: IWord;
@@ -26,32 +27,10 @@ function renderWordDefinitions(definitions?: IWordDefinition[]) {
         </S.Example>
       ))}
       {definition.synonyms?.length && (
-        <S.AdditionalWrapper>
-          <Typography fontWeight="600" component="span">
-            Synonyms:
-          </Typography>
-          <S.AdditionalTermsWrapper>
-            {definition.synonyms?.map((synonym) => (
-              <Typography key={uuid()} component="span">
-                {synonym}
-              </Typography>
-            ))}
-          </S.AdditionalTermsWrapper>
-        </S.AdditionalWrapper>
+        <AdditionalTermsList title="Synonyms" termsList={definition.synonyms} />
       )}
       {definition.antonyms?.length && (
-        <S.AdditionalWrapper>
-          <Typography fontWeight="600" component="span">
-            Antonyms:
-          </Typography>
-          <S.AdditionalTermsWrapper>
-            {definition.antonyms?.map((synonym) => (
-              <Typography key={uuid()} component="span">
-                {synonym}
-              </Typography>
-            ))}
-          </S.AdditionalTermsWrapper>
-        </S.AdditionalWrapper>
+        <AdditionalTermsList title="Antonyms" termsList={definition.antonyms} />
       )}
     </S.DefinitionWrapper>
   ));

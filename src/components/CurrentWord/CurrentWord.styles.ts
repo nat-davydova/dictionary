@@ -44,24 +44,3 @@ export const Definition = styled(Typography)`
 export const Example = styled(Typography)`
   margin-top: ${theme.spacing(0.5)};
 `;
-
-export const AdditionalWrapper = styled("div")`
-  margin-top: ${theme.spacing(1)};
-`;
-
-export const AdditionalTermsWrapper = styled("div")`
-  display: inline;
-  margin-left: ${theme.spacing(0.5)};
-
-  & > * {
-    display: inline-flex;
-  }
-
-  & > *:not(:last-child) {
-    margin-right: ${theme.spacing(0.5)};
-
-    &:after {
-      content: ",";
-    }
-  }
-`;
