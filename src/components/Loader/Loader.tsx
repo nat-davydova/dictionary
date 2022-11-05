@@ -1,10 +1,11 @@
-import { Typography } from "@mui/material";
 import React from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import * as S from "./Loader.styles";
 
 export function Loader() {
   return (
-    <Typography variant="h5" component="p">
-      Loading...
-    </Typography>
+    <S.LoaderWrapper>
+      <CircularProgress />
+    </S.LoaderWrapper>
   );
 }
