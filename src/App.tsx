@@ -22,10 +22,19 @@ export interface IError {
   message: string;
 }
 
+enum WordState {
+  INITIAL = "initial",
+  LOADING = "loading",
+  SUCCESS = "success",
+  ERROR = "error",
+}
+
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentWord, setCurrentWord] = useState<IWord | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentWordState, setCurrentWordState] = useState<WordState>(
+    WordState.INITIAL
+  );
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
@@ -37,7 +46,7 @@ function App() {
   }
 
   async function onSearchSubmitHandler() {
-    setIsLoading(true);
+    setCurrentWordState(WordState.LOADING);
     setError(null);
     setIsContentContainerVisible(true);
 
@@ -49,9 +58,8 @@ function App() {
 
       const responseToJson = await response.json();
 
-      setIsLoading(false);
-
       if (!response.ok) {
+        setCurrentWordState(WordState.ERROR);
         if (responseToJson.message === "word not found") {
           setError({
             title: "Word not found",
@@ -68,10 +76,11 @@ function App() {
         return;
       }
 
+      setCurrentWordState(WordState.SUCCESS);
       const mappedResponse = mapResponseToInterface(responseToJson);
       setCurrentWord(mappedResponse);
     } catch (e) {
-      setIsLoading(false);
+      setCurrentWordState(WordState.ERROR);
       setError({
         message:
           "Sorry, something is wrong. Wait 10 minutes, please, and try again",
@@ -97,9 +106,9 @@ function App() {
 
           {isContentContainerVisible && (
             <S.WordWrapper>
-              {isLoading && <Loader />}
+              {currentWordState === WordState.LOADING && <Loader />}
               {error && <ErrorNotification error={error} />}
-              {currentWord?.word && !isLoading && !error && (
+              {currentWordState === WordState.SUCCESS && currentWord?.word && (
                 <CurrentWord currentWord={currentWord} />
               )}
             </S.WordWrapper>
