@@ -1,8 +1,8 @@
 # dictionary v0.1.0 (in progress) - ⚠️ it's a very draft =)
 
 ⚙️ user can search words through WordsAPI <br/>
-⚙️ user see very basic loader while request is loading <br/>
-⚙️ user get a very basic error notification if request fails <br/>
+⚙️ user see a loader while request is loading <br/>
+⚙️ user get an error notification if request fails <br/>
 ⚙️ word consists of:
 
 * word itself;
