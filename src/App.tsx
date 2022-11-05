@@ -4,11 +4,12 @@ import { Typography } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import * as S from "./App.styles";
 import { mapResponseToInterface } from "./utils";
-import { Word, WordDefinition } from "./types";
+import { IWord, IWordDefinition } from "./types";
 import { Footer } from "./components/Footer";
 import { SearchBar } from "./components/SearchBar";
 import { Loader } from "./components/Loader";
 import { ErrorNotification } from "./components/ErrorNotification";
+import { Word } from "./components/Word";
 
 const options = {
   method: "GET",
@@ -20,7 +21,7 @@ const options = {
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [currentWord, setCurrentWord] = useState<Word | null>(null);
+  const [currentWord, setCurrentWord] = useState<IWord | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [isContentContainerVisible, setIsContentContainerVisible] =
@@ -65,55 +66,6 @@ function App() {
     }
   }
 
-  function renderWordDefinitions(definitions?: WordDefinition[]) {
-    if (!definitions) return <></>;
-
-    return definitions.map((definition, index) => (
-      <S.DefinitionWrapper key={uuid()}>
-        <S.DefinitionCoreWrapper>
-          <S.DefinitionNumber>{index + 1}</S.DefinitionNumber>
-          <S.PartOfSpeech fontStyle="italic">
-            {definition.partOfSpeech}
-          </S.PartOfSpeech>
-          <S.Definition>{definition.definition}</S.Definition>
-        </S.DefinitionCoreWrapper>
-        {definition.examples?.map((example) => (
-          <S.Example key={uuid()} fontStyle="italic">
-            {example}
-          </S.Example>
-        ))}
-        {definition.synonyms?.length && (
-          <S.AdditionalWrapper>
-            <Typography fontWeight="600" component="span">
-              Synonyms:
-            </Typography>
-            <S.AdditionalTermsWrapper>
-              {definition.synonyms?.map((synonym) => (
-                <Typography key={uuid()} component="span">
-                  {synonym}
-                </Typography>
-              ))}
-            </S.AdditionalTermsWrapper>
-          </S.AdditionalWrapper>
-        )}
-        {definition.antonyms?.length && (
-          <S.AdditionalWrapper>
-            <Typography fontWeight="600" component="span">
-              Antonyms:
-            </Typography>
-            <S.AdditionalTermsWrapper>
-              {definition.antonyms?.map((synonym) => (
-                <Typography key={uuid()} component="span">
-                  {synonym}
-                </Typography>
-              ))}
-            </S.AdditionalTermsWrapper>
-          </S.AdditionalWrapper>
-        )}
-      </S.DefinitionWrapper>
-    ));
-  }
-
   return (
     <div className="App">
       <S.AppWrapper>
@@ -129,19 +81,7 @@ function App() {
               {isLoading && <Loader />}
               {isError && <ErrorNotification />}
               {currentWord?.word && !isLoading && !isError && (
-                <>
-                  <S.WordBriefWrapper>
-                    <Typography variant="h4" component="h1">
-                      {currentWord.word}
-                    </Typography>
-                    {currentWord.transcription && (
-                      <Typography variant="subtitle1" component="p">
-                        [{currentWord.transcription}]
-                      </Typography>
-                    )}
-                  </S.WordBriefWrapper>
-                  {renderWordDefinitions(currentWord.definitions)}
-                </>
+                <Word word={currentWord.word} />
               )}
             </S.WordWrapper>
           )}

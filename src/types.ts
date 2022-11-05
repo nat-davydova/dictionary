@@ -1,4 +1,4 @@
-export interface WordDefinition {
+export interface IWordDefinition {
   definition: string;
   partOfSpeech: string;
   synonyms?: string[];
@@ -6,8 +6,8 @@ export interface WordDefinition {
   examples?: string[];
 }
 
-export interface Word {
+export interface IWord {
   word: string;
   transcription?: string;
-  definitions?: WordDefinition[];
+  definitions?: IWordDefinition[];
 }
