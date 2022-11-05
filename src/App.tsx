@@ -81,7 +81,7 @@ function App() {
               {isLoading && <Loader />}
               {isError && <ErrorNotification />}
               {currentWord?.word && !isLoading && !isError && (
-                <Word word={currentWord.word} />
+                <Word currentWord={currentWord} />
               )}
             </S.WordWrapper>
           )}

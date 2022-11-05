@@ -4,6 +4,10 @@ import { v4 as uuid } from "uuid";
 import * as S from "./Word.styles";
 import { IWord, IWordDefinition } from "../../types";
 
+interface ICurrentWord {
+  currentWord: IWord;
+}
+
 function renderWordDefinitions(definitions?: IWordDefinition[]) {
   if (!definitions) return <></>;
 
@@ -53,20 +57,22 @@ function renderWordDefinitions(definitions?: IWordDefinition[]) {
   ));
 }
 
-export function Word(currentWord: IWord) {
+export function Word({ currentWord }: ICurrentWord) {
+  const { word, transcription, definitions } = currentWord;
+
   return (
     <>
       <S.WordBriefWrapper>
         <Typography variant="h4" component="h1">
-          {currentWord.word}
+          {word}
         </Typography>
-        {currentWord.transcription && (
+        {transcription && (
           <Typography variant="subtitle1" component="p">
-            [{currentWord.transcription}]
+            [{transcription}]
           </Typography>
         )}
       </S.WordBriefWrapper>
-      {renderWordDefinitions(currentWord.definitions)}
+      {renderWordDefinitions(definitions)}
     </>
   );
 }
