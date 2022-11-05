@@ -15,7 +15,7 @@
 ### Plans for v0.2.0
 
 - [ ] add all the states of the word (initial/loading/loaded/error) to an enum;
-- [ ] split and decompose code to separate components;
+- [x] split and decompose code to separate components;
 - [ ] add better loader;
 - [ ] add better error notification from MUI and better 'no such word' thing;
 - [x] add search on enter;
@@ -23,5 +23,9 @@
 - [x] change `Styled` prefixes to `S`;
 - [x] fix bug with empty word container;
 
-### Plans for v0.3.0
+### Plans for v0.2.1
 - [ ] fix bug with searching if input is empty;
+- [ ] add exlint rule to remove not used imports;
+- [ ] make TS errors (if no prop passed) visible via overlay;
+- [ ] migrate to emotion;
+- [ ] props interfaces - with postfix
