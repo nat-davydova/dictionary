@@ -1,15 +1,13 @@
 import Container from "@mui/material/Container";
 import React, { useState } from "react";
-import { Typography } from "@mui/material";
-import { v4 as uuid } from "uuid";
 import * as S from "./App.styles";
 import { mapResponseToInterface } from "./utils";
-import { IWord, IWordDefinition } from "./types";
+import { IWord } from "./types";
 import { Footer } from "./components/Footer";
 import { SearchBar } from "./components/SearchBar";
 import { Loader } from "./components/Loader";
 import { ErrorNotification } from "./components/ErrorNotification";
-import { Word } from "./components/Word";
+import { CurrentWord } from "./components/CurrentWord";
 
 const options = {
   method: "GET",
@@ -81,7 +79,7 @@ function App() {
               {isLoading && <Loader />}
               {isError && <ErrorNotification />}
               {currentWord?.word && !isLoading && !isError && (
-                <Word currentWord={currentWord} />
+                <CurrentWord currentWord={currentWord} />
               )}
             </S.WordWrapper>
           )}

@@ -1,0 +1,1 @@
+export { CurrentWord } from "./CurrentWord";

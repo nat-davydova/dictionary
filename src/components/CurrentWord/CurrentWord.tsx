@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import { v4 as uuid } from "uuid";
-import * as S from "./Word.styles";
+import * as S from "./CurrentWord.styles";
 import { IWord, IWordDefinition } from "../../types";
 
 interface ICurrentWord {
@@ -57,7 +57,7 @@ function renderWordDefinitions(definitions?: IWordDefinition[]) {
   ));
 }
 
-export function Word({ currentWord }: ICurrentWord) {
+export function CurrentWord({ currentWord }: ICurrentWord) {
   const { word, transcription, definitions } = currentWord;
 
   return (
