@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
+import { v4 as uuid } from "uuid";
 import * as S from "./CurrentWord.styles";
 import { IWord, IWordDefinition } from "../../types";
 import { Definition } from "./Definition";
@@ -12,7 +13,7 @@ function renderWordDefinitions(definitions?: IWordDefinition[]) {
   if (!definitions) return <></>;
 
   return definitions.map((definition, index) => (
-    <Definition definition={definition} number={index + 1} />
+    <Definition key={uuid()} definition={definition} number={index + 1} />
   ));
 }
 
