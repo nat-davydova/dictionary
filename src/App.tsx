@@ -7,6 +7,7 @@ import { v4 as uuid } from "uuid";
 import * as S from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { Word, WordDefinition } from "./types";
+import { Footer } from "./components/Footer";
 
 const options = {
   method: "GET",
@@ -159,11 +160,7 @@ function App() {
           </S.WordWrapper>
         )}
       </Container>
-      <S.Footer>
-        <Container maxWidth="md">
-          <p>Natalia Davydova - 2022</p>
-        </Container>
-      </S.Footer>
+      <Footer />
     </div>
   );
 }
