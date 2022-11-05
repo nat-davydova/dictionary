@@ -7,6 +7,7 @@ import { mapResponseToInterface } from "./utils";
 import { Word, WordDefinition } from "./types";
 import { Footer } from "./components/Footer";
 import { SearchBar } from "./components/SearchBar";
+import { Loader } from "./components/Loader";
 
 const options = {
   method: "GET",
@@ -124,11 +125,7 @@ function App() {
 
           {isContentContainerVisible && (
             <S.WordWrapper>
-              {isLoading && (
-                <Typography variant="h5" component="p">
-                  Loading...
-                </Typography>
-              )}
+              {isLoading && <Loader />}
               {isError && (
                 <S.Error variant="h5" component="p">
                   Sorry, something went wrong
