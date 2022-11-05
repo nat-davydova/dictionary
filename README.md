@@ -16,8 +16,8 @@
 
 - [ ] add all the states of the word (initial/loading/loaded/error) to an enum;
 - [x] split and decompose code to separate components;
-- [ ] add better loader;
-- [ ] add better error notification from MUI and better 'no such word' thing;
+- [x] add better loader;
+- [x] add better error notification from MUI and better 'no such word' thing;
 - [x] add search on enter;
 - [x] add footer;
 - [x] change `Styled` prefixes to `S`;
@@ -29,3 +29,7 @@
 - [ ] make TS errors (if no prop passed) visible via overlay;
 - [ ] migrate to emotion;
 - [ ] props interfaces - with postfix
+
+### Plans for v0.3.0
+- [ ] improve error handling
+- [ ] add navbar
