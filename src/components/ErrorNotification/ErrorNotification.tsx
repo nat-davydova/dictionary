@@ -1,10 +1,19 @@
 import React from "react";
-import * as S from "./ErrorNotification.styles";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import { IError } from "../../App";
 
-export function ErrorNotification() {
+interface IErrorProps {
+  error: IError;
+}
+
+export function ErrorNotification({ error }: IErrorProps) {
+  const { title, message } = error;
+
   return (
-    <S.Error variant="h5" component="p">
-      Sorry, something went wrong
-    </S.Error>
+    <Alert severity="error">
+      {title && <AlertTitle>{title}</AlertTitle>}
+      {message}
+    </Alert>
   );
 }

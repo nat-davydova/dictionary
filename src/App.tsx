@@ -17,11 +17,16 @@ const options = {
   },
 };
 
+export interface IError {
+  title?: string;
+  message: string;
+}
+
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentWord, setCurrentWord] = useState<IWord | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
+  const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
 
@@ -33,7 +38,7 @@ function App() {
 
   async function onSearchSubmitHandler() {
     setIsLoading(true);
-    setIsError(false);
+    setError(null);
     setIsContentContainerVisible(true);
 
     try {
@@ -42,19 +47,35 @@ function App() {
         options
       );
 
+      const responseToJson = await response.json();
+
       setIsLoading(false);
 
       if (!response.ok) {
-        setIsError(true);
+        if (responseToJson.message === "word not found") {
+          setError({
+            title: "Word not found",
+            message: "Try to search a new word",
+          });
+
+          return;
+        }
+
+        setError({
+          message:
+            "Sorry, something is wrong. Wait 10 minutes, please, and try again",
+        });
         return;
       }
 
-      const responseToJson = await response.json();
       const mappedResponse = mapResponseToInterface(responseToJson);
       setCurrentWord(mappedResponse);
     } catch (e) {
       setIsLoading(false);
-      setIsError(true);
+      setError({
+        message:
+          "Sorry, something is wrong. Wait 10 minutes, please, and try again",
+      });
     }
   }
 
@@ -77,8 +98,8 @@ function App() {
           {isContentContainerVisible && (
             <S.WordWrapper>
               {isLoading && <Loader />}
-              {isError && <ErrorNotification />}
-              {currentWord?.word && !isLoading && !isError && (
+              {error && <ErrorNotification error={error} />}
+              {currentWord?.word && !isLoading && !error && (
                 <CurrentWord currentWord={currentWord} />
               )}
             </S.WordWrapper>
