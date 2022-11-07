@@ -17,7 +17,7 @@
 - [ ] add exlint rule to remove not used imports;
 - [ ] make TS errors (if no prop passed) visible via overlay;
 - [ ] migrate to css modules;
-- [ ] props interfaces - with postfix
+- [ ] props interfaces - with postfix;
 
 ### Plans for v1.0.0
 - [ ] improve error handling
