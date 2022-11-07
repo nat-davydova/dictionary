@@ -16,7 +16,7 @@
 - [ ] fix bug with searching if input is empty;
 - [ ] add exlint rule to remove not used imports;
 - [ ] make TS errors (if no prop passed) visible via overlay;
-- [ ] migrate to emotion;
+- [ ] migrate to css modules;
 - [ ] props interfaces - with postfix
 
 ### Plans for v1.0.0
