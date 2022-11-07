@@ -5,7 +5,7 @@ import * as S from "./CurrentWord.styles";
 import { IWord, IWordDefinition } from "../../types";
 import { Definition } from "./Definition";
 
-interface ICurrentWord {
+interface ICurrentWordProps {
   currentWord: IWord;
 }
 
@@ -17,7 +17,7 @@ function renderWordDefinitions(definitions?: IWordDefinition[]) {
   ));
 }
 
-export function CurrentWord({ currentWord }: ICurrentWord) {
+export function CurrentWord({ currentWord }: ICurrentWordProps) {
   const { word, transcription, definitions } = currentWord;
 
   return (

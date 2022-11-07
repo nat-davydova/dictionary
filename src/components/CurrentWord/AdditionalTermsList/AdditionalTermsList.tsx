@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import React from "react";
 import * as S from "./AdditionalTermsList.styles";
 
-interface IAdditionalTermsList {
+interface IAdditionalTermsListProps {
   title: string;
   termsList: string[];
 }
@@ -11,7 +11,7 @@ interface IAdditionalTermsList {
 export function AdditionalTermsList({
   title,
   termsList,
-}: IAdditionalTermsList) {
+}: IAdditionalTermsListProps) {
   return (
     <S.AdditionalWrapper>
       <Typography fontWeight="600" component="span">

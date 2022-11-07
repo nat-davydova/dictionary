@@ -4,11 +4,11 @@ import * as S from "./Definition.styles";
 import { AdditionalTermsList } from "../AdditionalTermsList";
 import { IWordDefinition } from "../../../types";
 
-interface IDefinition {
+interface IDefinitionProps {
   definition: IWordDefinition;
   number: number;
 }
-export function Definition({ definition, number }: IDefinition) {
+export function Definition({ definition, number }: IDefinitionProps) {
   return (
     <S.DefinitionWrapper key={uuid()}>
       <S.DefinitionCoreWrapper>
