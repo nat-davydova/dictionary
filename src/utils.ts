@@ -1,7 +1,7 @@
-import { Word } from "./types";
+import { IWord } from "./types";
 
 export function mapResponseToInterface(response: any) {
-  const mappedData: Word = {
+  const mappedData: IWord = {
     word: "",
   };
 

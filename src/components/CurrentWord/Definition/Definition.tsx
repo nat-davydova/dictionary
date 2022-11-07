@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import React from "react";
-import * as S from "../CurrentWord.styles";
+import * as S from "./Definition.styles";
 import { AdditionalTermsList } from "../AdditionalTermsList";
 import { IWordDefinition } from "../../../types";
 
