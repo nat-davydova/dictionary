@@ -1,5 +1,5 @@
-import { Box, styled } from "@mui/material";
+import { css } from "@emotion/css";
 
-export const SearchWrapper = styled(Box)`
+export const SearchWrapper = css`
   display: flex;
 `;

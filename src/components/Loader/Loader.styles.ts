@@ -1,6 +1,6 @@
-import { styled } from "@mui/material";
+import { css } from "@emotion/css";
 
-export const LoaderWrapper = styled("div")`
+export const LoaderContainer = css`
   display: flex;
   justify-content: center;
 `;

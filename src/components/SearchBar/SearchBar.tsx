@@ -1,9 +1,10 @@
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React from "react";
-import * as S from "./SearchBar.styles";
+import { Box } from "@mui/material";
+import { SearchWrapper } from "./SearchBar.styles";
 
-interface ISearchBar {
+interface ISearchBarProps {
   onSearchInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSearchKeydownHandler: (event: React.KeyboardEvent) => void;
   onSearchSubmitHandler: () => void;
@@ -13,9 +14,9 @@ export function SearchBar({
   onSearchInputHandler,
   onSearchKeydownHandler,
   onSearchSubmitHandler,
-}: ISearchBar) {
+}: ISearchBarProps) {
   return (
-    <S.SearchWrapper>
+    <Box className={SearchWrapper}>
       <TextField
         label="Search a word"
         variant="outlined"
@@ -26,6 +27,6 @@ export function SearchBar({
       <Button variant="contained" onClick={onSearchSubmitHandler}>
         Search
       </Button>
-    </S.SearchWrapper>
+    </Box>
   );
 }

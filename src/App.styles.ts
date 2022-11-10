@@ -1,13 +1,13 @@
-import { createTheme, styled } from "@mui/material";
-import Paper from "@mui/material/Paper";
+import { createTheme } from "@mui/material";
+import { css } from "@emotion/css";
 
 const theme = createTheme();
 
-export const AppWrapper = styled("div")`
+export const AppWrapper = css`
   margin: ${theme.spacing(7)} 0;
 `;
 
-export const WordWrapper = styled(Paper)`
+export const WordWrapper = css`
   margin-top: ${theme.spacing(4)};
   padding: ${theme.spacing(3)};
 `;

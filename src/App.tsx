@@ -1,6 +1,7 @@
 import Container from "@mui/material/Container";
 import React, { useState } from "react";
-import * as S from "./App.styles";
+import { Paper } from "@mui/material";
+import { AppWrapper, WordWrapper } from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { IWord } from "./types";
 import { Footer } from "./components/Footer";
@@ -96,7 +97,7 @@ function App() {
 
   return (
     <div className="App">
-      <S.AppWrapper>
+      <div className={AppWrapper}>
         <Container maxWidth="md">
           <SearchBar
             onSearchInputHandler={onSearchInputHandler}
@@ -105,16 +106,16 @@ function App() {
           />
 
           {isContentContainerVisible && (
-            <S.WordWrapper>
+            <Paper className={WordWrapper}>
               {currentWordState === WordState.LOADING && <Loader />}
               {error && <ErrorNotification error={error} />}
               {currentWordState === WordState.SUCCESS && currentWord?.word && (
                 <CurrentWord currentWord={currentWord} />
               )}
-            </S.WordWrapper>
+            </Paper>
           )}
         </Container>
-      </S.AppWrapper>
+      </div>
       <Footer />
     </div>
   );

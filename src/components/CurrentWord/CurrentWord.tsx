@@ -1,11 +1,11 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import { v4 as uuid } from "uuid";
-import * as S from "./CurrentWord.styles";
+import { WordBriefWrapper } from "./CurrentWord.styles";
 import { IWord, IWordDefinition } from "../../types";
 import { Definition } from "./Definition";
 
-interface ICurrentWord {
+interface ICurrentWordProps {
   currentWord: IWord;
 }
 
@@ -17,12 +17,12 @@ function renderWordDefinitions(definitions?: IWordDefinition[]) {
   ));
 }
 
-export function CurrentWord({ currentWord }: ICurrentWord) {
+export function CurrentWord({ currentWord }: ICurrentWordProps) {
   const { word, transcription, definitions } = currentWord;
 
   return (
     <>
-      <S.WordBriefWrapper>
+      <div className={WordBriefWrapper}>
         <Typography variant="h4" component="h1">
           {word}
         </Typography>
@@ -31,7 +31,7 @@ export function CurrentWord({ currentWord }: ICurrentWord) {
             [{transcription}]
           </Typography>
         )}
-      </S.WordBriefWrapper>
+      </div>
       {renderWordDefinitions(definitions)}
     </>
   );
