@@ -15,7 +15,7 @@
 ### Plans for v0.2.1
 - [x] add exlint rule to remove not used imports;
 - [x] make TS errors (if no prop passed) visible via overlay;
-- [ ] migrate to css modules;
+- [x] migrate to emotion;
 - [x] props interfaces - with postfix;
 
 ### Plans for v1.0.0
