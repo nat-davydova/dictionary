@@ -1,7 +1,10 @@
 import { Typography } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import React from "react";
-import * as S from "./AdditionalTermsList.styles";
+import {
+  AdditionalTermsWrapper,
+  AdditionalWrapper,
+} from "./AdditionalTermsList.styles";
 
 interface IAdditionalTermsListProps {
   title: string;
@@ -13,17 +16,17 @@ export function AdditionalTermsList({
   termsList,
 }: IAdditionalTermsListProps) {
   return (
-    <S.AdditionalWrapper>
+    <div className={AdditionalWrapper}>
       <Typography fontWeight="600" component="span">
         {title}:
       </Typography>
-      <S.AdditionalTermsWrapper>
+      <div className={AdditionalTermsWrapper}>
         {termsList.map((term) => (
           <Typography key={uuid()} component="span">
             {term}
           </Typography>
         ))}
-      </S.AdditionalTermsWrapper>
-    </S.AdditionalWrapper>
+      </div>
+    </div>
   );
 }

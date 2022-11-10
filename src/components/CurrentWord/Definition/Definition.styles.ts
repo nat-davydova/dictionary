@@ -1,14 +1,15 @@
-import { Box, createTheme, styled, Typography } from "@mui/material";
+import { createTheme } from "@mui/material";
+import { css } from "@emotion/css";
 
 const theme = createTheme();
 
-export const DefinitionWrapper = styled(Box)`
+export const DefinitionWrapper = css`
   &:not(:last-child) {
     margin-bottom: ${theme.spacing(2)};
   }
 `;
 
-export const DefinitionNumber = styled("p")`
+export const DefinitionNumber = css`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,21 +23,21 @@ export const DefinitionNumber = styled("p")`
   background-color: ${theme.palette.primary.main};
 `;
 
-export const DefinitionCoreWrapper = styled("div")`
+export const DefinitionCoreWrapper = css`
   & > *:not(:last-child) {
     display: inline-flex;
     margin-right: ${theme.spacing(1)};
   }
 `;
 
-export const PartOfSpeech = styled(Typography)`
+export const PartOfSpeech = css`
   color: ${theme.palette.grey["500"]};
 `;
 
-export const Definition = styled(Typography)`
+export const DefinitionTypography = css`
   display: inline;
 `;
 
-export const Example = styled(Typography)`
+export const Example = css`
   margin-top: ${theme.spacing(0.5)};
 `;

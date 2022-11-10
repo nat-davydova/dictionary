@@ -1,7 +1,8 @@
-import { createTheme, styled } from "@mui/material";
+import { createTheme } from "@mui/material";
+import { css } from "@emotion/css";
 
 const theme = createTheme();
 
-export const WordBriefWrapper = styled(`div`)`
+export const WordBriefWrapper = css`
   margin-bottom: ${theme.spacing(3)};
 `;

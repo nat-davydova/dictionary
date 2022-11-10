@@ -1,13 +1,13 @@
 import React from "react";
 import Container from "@mui/material/Container";
-import * as S from "./Footer.styles";
+import { FooterWrapper } from "./Footer.styles";
 
 export function Footer() {
   return (
-    <S.Footer>
+    <footer className={FooterWrapper}>
       <Container maxWidth="md">
         <p>Natalia Davydova - 2022</p>
       </Container>
-    </S.Footer>
+    </footer>
   );
 }

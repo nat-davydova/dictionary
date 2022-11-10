@@ -1,12 +1,13 @@
-import { createTheme, styled } from "@mui/material";
+import { createTheme } from "@mui/material";
+import { css } from "@emotion/css";
 
 const theme = createTheme();
 
-export const AdditionalWrapper = styled("div")`
+export const AdditionalWrapper = css`
   margin-top: ${theme.spacing(1)};
 `;
 
-export const AdditionalTermsWrapper = styled("div")`
+export const AdditionalTermsWrapper = css`
   display: inline;
   margin-left: ${theme.spacing(0.5)};
 

@@ -1,8 +1,9 @@
-import { createTheme, styled } from "@mui/material";
+import { createTheme } from "@mui/material";
+import { css } from "@emotion/css";
 
 const theme = createTheme();
 
-export const Footer = styled("footer")`
+export const FooterWrapper = css`
   margin-top: auto;
   padding: ${theme.spacing(2)} 0;
   color: ${theme.palette.primary.contrastText};

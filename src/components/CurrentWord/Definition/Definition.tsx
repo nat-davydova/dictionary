@@ -1,8 +1,16 @@
 import { v4 as uuid } from "uuid";
 import React from "react";
-import * as S from "./Definition.styles";
+import { Box, Typography } from "@mui/material";
 import { AdditionalTermsList } from "../AdditionalTermsList";
 import { IWordDefinition } from "../../../types";
+import {
+  DefinitionWrapper,
+  DefinitionNumber,
+  DefinitionCoreWrapper,
+  PartOfSpeech,
+  DefinitionTypography,
+  Example,
+} from "./Definition.styles";
 
 interface IDefinitionProps {
   definition: IWordDefinition;
@@ -10,18 +18,20 @@ interface IDefinitionProps {
 }
 export function Definition({ definition, number }: IDefinitionProps) {
   return (
-    <S.DefinitionWrapper key={uuid()}>
-      <S.DefinitionCoreWrapper>
-        <S.DefinitionNumber>{number}</S.DefinitionNumber>
-        <S.PartOfSpeech fontStyle="italic">
+    <Box className={DefinitionWrapper} key={uuid()}>
+      <div className={DefinitionCoreWrapper}>
+        <p className={DefinitionNumber}>{number}</p>
+        <Typography className={PartOfSpeech} fontStyle="italic">
           {definition.partOfSpeech}
-        </S.PartOfSpeech>
-        <S.Definition>{definition.definition}</S.Definition>
-      </S.DefinitionCoreWrapper>
+        </Typography>
+        <Typography className={DefinitionTypography}>
+          {definition.definition}
+        </Typography>
+      </div>
       {definition.examples?.map((example) => (
-        <S.Example key={uuid()} fontStyle="italic">
+        <Typography className={Example} key={uuid()} fontStyle="italic">
           {example}
-        </S.Example>
+        </Typography>
       ))}
       {definition.synonyms?.length && (
         <AdditionalTermsList title="Synonyms" termsList={definition.synonyms} />
@@ -29,6 +39,6 @@ export function Definition({ definition, number }: IDefinitionProps) {
       {definition.antonyms?.length && (
         <AdditionalTermsList title="Antonyms" termsList={definition.antonyms} />
       )}
-    </S.DefinitionWrapper>
+    </Box>
   );
 }
