@@ -9,6 +9,7 @@ import { SearchBar } from "./components/SearchBar";
 import { Loader } from "./components/Loader";
 import { ErrorNotification } from "./components/ErrorNotification";
 import { CurrentWord } from "./components/CurrentWord";
+import { Navbar } from "./components/Navbar";
 
 const options = {
   method: "GET",
@@ -106,6 +107,7 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar />
       <div className={AppWrapper}>
         <Container maxWidth="md">
           <SearchBar
