@@ -1,6 +1,7 @@
 import Container from "@mui/material/Container";
 import React, { useState } from "react";
 import { Paper } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import { AppWrapper, WordWrapper } from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { IWord } from "./types";
@@ -10,6 +11,7 @@ import { Loader } from "./components/Loader";
 import { ErrorNotification } from "./components/ErrorNotification";
 import { CurrentWord } from "./components/CurrentWord";
 import { Navbar } from "./components/Navbar";
+import { LastSearchedWords } from "./components/LastSearchedWords";
 
 const options = {
   method: "GET",
@@ -115,16 +117,23 @@ function App() {
             onSearchKeydownHandler={onSearchKeydownHandler}
             onSearchSubmitHandler={onSearchSubmitHandler}
           />
-
-          {isContentContainerVisible && (
-            <Paper className={WordWrapper}>
-              {currentWordState === WordState.LOADING && <Loader />}
-              {error && <ErrorNotification error={error} />}
-              {currentWordState === WordState.SUCCESS && currentWord?.word && (
-                <CurrentWord currentWord={currentWord} />
+          <Grid container spacing={3}>
+            <Grid item xs={9}>
+              {isContentContainerVisible && (
+                <Paper className={WordWrapper}>
+                  {currentWordState === WordState.LOADING && <Loader />}
+                  {error && <ErrorNotification error={error} />}
+                  {currentWordState === WordState.SUCCESS &&
+                    currentWord?.word && (
+                      <CurrentWord currentWord={currentWord} />
+                    )}
+                </Paper>
               )}
-            </Paper>
-          )}
+            </Grid>
+            <Grid item xs={3}>
+              <LastSearchedWords />
+            </Grid>
+          </Grid>
         </Container>
       </div>
       <Footer />
