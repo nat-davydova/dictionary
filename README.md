@@ -16,5 +16,7 @@
 - [ ] add navbar
 - [ ] add sidebar with last words watched
 - [ ] save last words in the storage
-- [ ] fix bug with searching if input is empty;
+- [x] fix bug with searching if input is empty;
+
+### Plans for v1.1.0
 - [ ] improve error handling
