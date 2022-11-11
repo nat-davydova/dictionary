@@ -12,7 +12,11 @@ export function ErrorNotification({ error }: IErrorProps) {
 
   return (
     <Alert severity="error">
-      {title && <AlertTitle>{title}</AlertTitle>}
+      {title && (
+        <AlertTitle>
+          <strong>{title}</strong>
+        </AlertTitle>
+      )}
       {message}
     </Alert>
   );
