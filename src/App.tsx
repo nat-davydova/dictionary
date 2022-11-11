@@ -47,9 +47,18 @@ function App() {
   }
 
   async function onSearchSubmitHandler() {
+    setIsContentContainerVisible(true);
+
+    if (!searchQuery) {
+      setError({
+        title: "Search field is empty",
+        message: "Try to type a word in it and search then",
+      });
+      return;
+    }
+
     setCurrentWordState(WordState.LOADING);
     setError(null);
-    setIsContentContainerVisible(true);
 
     try {
       const response = await fetch(
