@@ -2,7 +2,7 @@ import React from "react";
 import {
   List,
   ListItem,
-  // ListItemButton,
+  ListItemButton,
   ListItemText,
   Typography,
 } from "@mui/material";
@@ -11,10 +11,12 @@ import { ILastSearchedWords } from "../../App";
 
 interface ILastSearchedWordsProps {
   lastSearchedWords: ILastSearchedWords;
+  onLastSearchedWordClickHandler: (word: string) => void;
 }
 
 export function LastSearchedWords({
   lastSearchedWords,
+  onLastSearchedWordClickHandler,
 }: ILastSearchedWordsProps) {
   const uniqueSearchedWords = [...new Set(lastSearchedWords)];
 
@@ -27,7 +29,11 @@ export function LastSearchedWords({
         {uniqueSearchedWords
           .map((word) => (
             <ListItem disablePadding key={uuid()}>
-              <ListItemText primary={word} />
+              <ListItemButton
+                onClick={() => onLastSearchedWordClickHandler(word)}
+              >
+                <ListItemText primary={word} />
+              </ListItemButton>
             </ListItem>
           ))
           .reverse()}

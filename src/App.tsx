@@ -58,23 +58,14 @@ function App() {
     setSearchQuery(event.target.value);
   }
 
-  async function onSearchSubmitHandler() {
+  async function getWordFromApi(word: string) {
     setIsContentContainerVisible(true);
-
-    if (!searchQuery) {
-      setError({
-        title: "Search field is empty",
-        message: "Try to type a word in it and search then",
-      });
-      return;
-    }
-
     setCurrentWordState(WordState.LOADING);
     setError(null);
 
     try {
       const response = await fetch(
-        `https://wordsapiv1.p.rapidapi.com/words/${searchQuery}`,
+        `https://wordsapiv1.p.rapidapi.com/words/${word}`,
         options
       );
 
@@ -111,6 +102,19 @@ function App() {
     }
   }
 
+  async function onSearchSubmitHandler() {
+    if (!searchQuery) {
+      setError({
+        title: "Search field is empty",
+        message: "Try to type a word in it and search then",
+      });
+      return;
+    }
+
+    await getWordFromApi(searchQuery);
+    setSearchQuery("");
+  }
+
   function onSearchKeydownHandler(event: React.KeyboardEvent) {
     if (event.key === "Enter") {
       onSearchSubmitHandler();
@@ -126,6 +130,7 @@ function App() {
             onSearchInputHandler={onSearchInputHandler}
             onSearchKeydownHandler={onSearchKeydownHandler}
             onSearchSubmitHandler={onSearchSubmitHandler}
+            searchQuery={searchQuery}
           />
           <Grid container spacing={3} className={WordAndSidebarWrapper}>
             <Grid item xs={12} sm={8} md={9} className={WordContainer}>
@@ -142,7 +147,10 @@ function App() {
             </Grid>
             <Grid item xs={12} sm={4} md={3}>
               <aside>
-                <LastSearchedWords lastSearchedWords={lastSearchedWords} />
+                <LastSearchedWords
+                  lastSearchedWords={lastSearchedWords}
+                  onLastSearchedWordClickHandler={getWordFromApi}
+                />
               </aside>
             </Grid>
           </Grid>

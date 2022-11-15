@@ -8,12 +8,14 @@ interface ISearchBarProps {
   onSearchInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSearchKeydownHandler: (event: React.KeyboardEvent) => void;
   onSearchSubmitHandler: () => void;
+  searchQuery: string;
 }
 
 export function SearchBar({
   onSearchInputHandler,
   onSearchKeydownHandler,
   onSearchSubmitHandler,
+  searchQuery,
 }: ISearchBarProps) {
   return (
     <Box className={SearchWrapper}>
@@ -23,6 +25,7 @@ export function SearchBar({
         fullWidth
         onChange={onSearchInputHandler}
         onKeyDown={onSearchKeydownHandler}
+        value={searchQuery}
       />
       <Button variant="contained" onClick={onSearchSubmitHandler}>
         Search
