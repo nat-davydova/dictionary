@@ -18,7 +18,12 @@
 - [ ] save last words in the storage
 - [x] fix bug with searching if input is empty;
 
-### Plans for v1.1.0
+### Plans for v1.0.1
 - [ ] improve error handling
 - [ ] add favicon
 - [ ] add better logo (with image)
+- [ ] move api to service
+- [ ] make Last Searched scrollable
+
+### Plans for v1.1.1
+- [ ] re-arrange last searched words when there is a duplicate
