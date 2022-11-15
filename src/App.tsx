@@ -2,7 +2,12 @@ import Container from "@mui/material/Container";
 import React, { useState } from "react";
 import { Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { AppWrapper, WordAndSidebarWrapper, WordWrapper } from "./App.styles";
+import {
+  AppWrapper,
+  WordAndSidebarWrapper,
+  WordContainer,
+  WordWrapper,
+} from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { IWord } from "./types";
 import { Footer } from "./components/Footer";
@@ -26,6 +31,8 @@ export interface IError {
   message: string;
 }
 
+export type ILastSearchedWords = Array<string>;
+
 enum WordState {
   INITIAL = "initial",
   LOADING = "loading",
@@ -42,6 +49,8 @@ function App() {
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
+  const [lastSearchedWords, setLastSearchedWords] =
+    useState<ILastSearchedWords>([]);
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -92,6 +101,7 @@ function App() {
       setCurrentWordState(WordState.SUCCESS);
       const mappedResponse = mapResponseToInterface(responseToJson);
       setCurrentWord(mappedResponse);
+      setLastSearchedWords([...lastSearchedWords, searchQuery]);
     } catch (e) {
       setCurrentWordState(WordState.ERROR);
       setError({
@@ -118,7 +128,7 @@ function App() {
             onSearchSubmitHandler={onSearchSubmitHandler}
           />
           <Grid container spacing={3} className={WordAndSidebarWrapper}>
-            <Grid item xs={9}>
+            <Grid item xs={12} sm={8} md={9} className={WordContainer}>
               {isContentContainerVisible && (
                 <Paper className={WordWrapper}>
                   {currentWordState === WordState.LOADING && <Loader />}
@@ -130,9 +140,9 @@ function App() {
                 </Paper>
               )}
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={4} md={3}>
               <aside>
-                <LastSearchedWords />
+                <LastSearchedWords lastSearchedWords={lastSearchedWords} />
               </aside>
             </Grid>
           </Grid>
