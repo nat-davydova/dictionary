@@ -2,7 +2,7 @@ import Container from "@mui/material/Container";
 import React, { useState } from "react";
 import { Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { AppWrapper, WordWrapper } from "./App.styles";
+import { AppWrapper, WordAndSidebarWrapper, WordWrapper } from "./App.styles";
 import { mapResponseToInterface } from "./utils";
 import { IWord } from "./types";
 import { Footer } from "./components/Footer";
@@ -117,7 +117,7 @@ function App() {
             onSearchKeydownHandler={onSearchKeydownHandler}
             onSearchSubmitHandler={onSearchSubmitHandler}
           />
-          <Grid container spacing={3}>
+          <Grid container spacing={3} className={WordAndSidebarWrapper}>
             <Grid item xs={9}>
               {isContentContainerVisible && (
                 <Paper className={WordWrapper}>
@@ -131,7 +131,9 @@ function App() {
               )}
             </Grid>
             <Grid item xs={3}>
-              <LastSearchedWords />
+              <aside>
+                <LastSearchedWords />
+              </aside>
             </Grid>
           </Grid>
         </Container>

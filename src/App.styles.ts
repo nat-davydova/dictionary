@@ -11,3 +11,7 @@ export const WordWrapper = css`
   margin-top: ${theme.spacing(4)};
   padding: ${theme.spacing(3)};
 `;
+
+export const WordAndSidebarWrapper = css`
+  margin-top: 0;
+`;
