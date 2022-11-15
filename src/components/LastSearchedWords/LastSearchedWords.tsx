@@ -16,13 +16,15 @@ interface ILastSearchedWordsProps {
 export function LastSearchedWords({
   lastSearchedWords,
 }: ILastSearchedWordsProps) {
+  const uniqueSearchedWords = [...new Set(lastSearchedWords)];
+
   return (
     <>
       <Typography component="h3" variant="h5">
         Last Searched
       </Typography>
       <List>
-        {lastSearchedWords
+        {uniqueSearchedWords
           .map((word) => (
             <ListItem disablePadding key={uuid()}>
               <ListItemText primary={word} />
