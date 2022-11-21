@@ -19,12 +19,12 @@
 - [x] fix bug with searching if input is empty;
 
 ### Plans for v1.0.1
-- [ ] make set of unique words not in the list, but in the app
+- [ ] make set of unique words not in the list, but in the app (when putting on storage)
+- [ ] re-arrange last searched words when there is a duplicate
 - [ ] improve error handling
-- [ ] add favicon
-- [ ] add better logo (with image)
 - [ ] move api to service
 
 ### Plans for v1.1.1
-- [ ] re-arrange last searched words when there is a duplicate
+- [ ] add favicon
+- [ ] add better logo (with image)
 - [ ] make Last Searched scrollable
