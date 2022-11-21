@@ -14,7 +14,7 @@
 
 ### Plans for v1.0.0
 - [x] add navbar
-- [ ] add sidebar with last words watched
+- [x] add sidebar with last words watched
 - [ ] save last words in the storage
 - [x] fix bug with searching if input is empty;
 
