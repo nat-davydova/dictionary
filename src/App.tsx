@@ -49,8 +49,7 @@ function App() {
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
-  const [lastSearchedWords, setLastSearchedWords] =
-    useState<ILastSearchedWords>([]);
+  const [, setLastSearchedWords] = useState<ILastSearchedWords>([]);
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -92,7 +91,15 @@ function App() {
       setCurrentWordState(WordState.SUCCESS);
       const mappedResponse = mapResponseToInterface(responseToJson);
       setCurrentWord(mappedResponse);
-      setLastSearchedWords([...lastSearchedWords, searchQuery]);
+      setLastSearchedWords((prevLastSearchedWords) => {
+        const updatedWords = [...prevLastSearchedWords, word];
+        const updatedWordsStringified = updatedWords.join(",");
+        window.localStorage.setItem(
+          "lastSearchedWords",
+          updatedWordsStringified
+        );
+        return updatedWords;
+      });
     } catch (e) {
       setCurrentWordState(WordState.ERROR);
       setError({
@@ -149,7 +156,6 @@ function App() {
             <Grid item xs={8} sm={4} md={3}>
               <aside>
                 <LastSearchedWords
-                  lastSearchedWords={lastSearchedWords}
                   onLastSearchedWordClickHandler={getWordFromApi}
                 />
               </aside>

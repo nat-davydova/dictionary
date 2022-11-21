@@ -7,17 +7,17 @@ import {
   Typography,
 } from "@mui/material";
 import { v4 as uuid } from "uuid";
-import { ILastSearchedWords } from "../../App";
 
 interface ILastSearchedWordsProps {
-  lastSearchedWords: ILastSearchedWords;
   onLastSearchedWordClickHandler: (word: string) => void;
 }
 
 export function LastSearchedWords({
-  lastSearchedWords,
   onLastSearchedWordClickHandler,
 }: ILastSearchedWordsProps) {
+  const lastSearchedWordsStringified =
+    window.localStorage.getItem("lastSearchedWords");
+  const lastSearchedWords = lastSearchedWordsStringified?.split(",");
   const uniqueSearchedWords = [...new Set(lastSearchedWords)];
 
   return (
