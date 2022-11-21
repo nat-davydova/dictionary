@@ -138,7 +138,8 @@ function App() {
                 <Paper className={WordWrapper}>
                   {currentWordState === WordState.LOADING && <Loader />}
                   {error && <ErrorNotification error={error} />}
-                  {currentWordState === WordState.SUCCESS &&
+                  {!error &&
+                    currentWordState === WordState.SUCCESS &&
                     currentWord?.word && (
                       <CurrentWord currentWord={currentWord} />
                     )}
