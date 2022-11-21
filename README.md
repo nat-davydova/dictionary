@@ -1,9 +1,9 @@
-# dictionary v0.2.0 (in progress) - ⚠️ it's a very draft =)
+# dictionary v0.2.1 (in progress) - ⚠️ it's a very draft =)
 
-⚙️ user can search words through WordsAPI <br/>
-⚙️ user see a loader while request is loading <br/>
-⚙️ user get an error notification if request fails <br/>
-⚙️ word consists of:
+✅ user can search words through WordsAPI <br/>
+✅ user see a loader while request is loading <br/>
+✅ user get an error notification if request fails <br/>
+✅ word consists of:
 
 * word itself;
 * transcription (optionally);
@@ -12,14 +12,24 @@
 * synonyms (optional);
 * antonyms (optional);
 
-### Plans for v0.2.1
-- [x] add exlint rule to remove not used imports;
-- [x] make TS errors (if no prop passed) visible via overlay;
-- [ ] migrate to css modules;
-- [x] props interfaces - with postfix;
-
 ### Plans for v1.0.0
-- [ ] fix bug with searching if input is empty;
+- [x] add navbar
+- [x] add sidebar with last words watched
+- [ ] save last words in the storage
+- [x] fix bug with searching if input is empty;
+
+### Plans for v1.0.1
+- [ ] add clear last words btn
+- [ ] make set of unique words not in the list, but in the app (when putting on storage)
+- [ ] re-arrange last searched words when there is a duplicate
 - [ ] improve error handling
-- [ ] add navbar
-- [ ] add dark theme
+- [ ] move api to service
+
+### Plans for v1.0.2
+- [ ] add favicon
+- [ ] add better logo (with image)
+- [ ] make Last Searched scrollable
+- [ ] fix issues with words like 'hey'
+
+### Plans for v1.1.0
+- [ ] move to useReducer
