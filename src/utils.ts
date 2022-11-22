@@ -1,4 +1,5 @@
 import { IWord, IWordDefinition } from "./types";
+import { LocalStorageFields } from "./consts";
 
 interface IResponse {
   pronunciation: {
@@ -32,8 +33,9 @@ export function mapResponseToInterface(response: IResponse) {
 }
 
 export function getLastSearchedWords() {
-  const lastSearchedWordsStringified =
-    window.localStorage.getItem("lastSearchedWords");
+  const lastSearchedWordsStringified = window.localStorage.getItem(
+    LocalStorageFields.LAST_SEARCHED_WORDS
+  );
   return lastSearchedWordsStringified
     ? lastSearchedWordsStringified.split(",")
     : [];
@@ -41,7 +43,9 @@ export function getLastSearchedWords() {
 
 export function setLastSearchedWord(word: string) {
   const prevWords =
-    window.localStorage.getItem("lastSearchedWords")?.split(",") || [];
+    window.localStorage
+      .getItem(LocalStorageFields.LAST_SEARCHED_WORDS)
+      ?.split(",") || [];
   const updatedWords = [...new Set([...prevWords, word])];
   const updatedWordsStringified = updatedWords.join(",");
   window.localStorage.setItem("lastSearchedWords", updatedWordsStringified);
