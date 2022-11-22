@@ -17,6 +17,7 @@ import { ErrorNotification } from "./components/ErrorNotification";
 import { CurrentWord } from "./components/CurrentWord";
 import { Navbar } from "./components/Navbar";
 import { LastSearchedWords } from "./components/LastSearchedWords";
+import { LoadingState } from "./consts";
 
 const options = {
   method: "GET",
@@ -31,20 +32,11 @@ export interface IError {
   message: string;
 }
 
-export type ILastSearchedWords = Array<string>;
-
-enum WordState {
-  INITIAL = "initial",
-  LOADING = "loading",
-  SUCCESS = "success",
-  ERROR = "error",
-}
-
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentWord, setCurrentWord] = useState<IWord | null>(null);
-  const [currentWordState, setCurrentWordState] = useState<WordState>(
-    WordState.INITIAL
+  const [currentWordState, setCurrentWordState] = useState<LoadingState>(
+    LoadingState.INITIAL
   );
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
@@ -58,7 +50,7 @@ function App() {
 
   async function getWordFromApi(word: string) {
     setIsContentContainerVisible(true);
-    setCurrentWordState(WordState.LOADING);
+    setCurrentWordState(LoadingState.LOADING);
     setError(null);
 
     try {
@@ -70,7 +62,7 @@ function App() {
       const responseToJson = await response.json();
 
       if (!response.ok) {
-        setCurrentWordState(WordState.ERROR);
+        setCurrentWordState(LoadingState.ERROR);
 
         const ifNotFoundError = responseToJson.message === "word not found";
         const errorTitle = ifNotFoundError ? "Word not found" : "";
@@ -86,12 +78,12 @@ function App() {
         return;
       }
 
-      setCurrentWordState(WordState.SUCCESS);
+      setCurrentWordState(LoadingState.SUCCESS);
       const mappedResponse = mapResponseToInterface(responseToJson);
       setCurrentWord(mappedResponse);
       setLastSearchedWord(word);
     } catch (e) {
-      setCurrentWordState(WordState.ERROR);
+      setCurrentWordState(LoadingState.ERROR);
       setError({
         message:
           "Sorry, something is wrong. Wait 10 minutes, please, and try again",
@@ -133,10 +125,10 @@ function App() {
             <Grid item xs={12} sm={8} md={9} className={WordContainer}>
               {isContentContainerVisible && (
                 <Paper className={WordWrapper}>
-                  {currentWordState === WordState.LOADING && <Loader />}
+                  {currentWordState === LoadingState.LOADING && <Loader />}
                   {error && <ErrorNotification error={error} />}
                   {!error &&
-                    currentWordState === WordState.SUCCESS &&
+                    currentWordState === LoadingState.SUCCESS &&
                     currentWord?.word && (
                       <CurrentWord currentWord={currentWord} />
                     )}
