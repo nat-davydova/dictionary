@@ -91,8 +91,10 @@ function App() {
       setCurrentWordState(WordState.SUCCESS);
       const mappedResponse = mapResponseToInterface(responseToJson);
       setCurrentWord(mappedResponse);
-      setLastSearchedWords((prevLastSearchedWords) => {
-        const updatedWords = [...new Set([...prevLastSearchedWords, word])];
+      setLastSearchedWords(() => {
+        const prevWords =
+          window.localStorage.getItem("lastSearchedWords")?.split(",") || [];
+        const updatedWords = [...new Set([...prevWords, word])];
         const updatedWordsStringified = updatedWords.join(",");
         window.localStorage.setItem(
           "lastSearchedWords",
