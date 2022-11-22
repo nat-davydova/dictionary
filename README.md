@@ -17,8 +17,9 @@
 ✅ last words which user has searched are shown in the 'Last searched' section and stored in `localStorage`; 
 
 ### Plans for v1.0.1
-- [ ] fix error when on first app load click on last word and list replaced
-- [ ] make set of unique words not in the list, but in the app (when putting on storage)
+- [x] fix error when on first app load click on word and list replaced
+- [x] make set of unique words not in the list, but in the app (when putting on storage)
+- [ ] refactor setting word func
 - [ ] re-arrange last searched words when there is a duplicate
 - [ ] move api to service
 - [x] add stack bages into readme;
