@@ -19,8 +19,7 @@
 ### Plans for v1.0.1
 - [x] fix error when on first app load click on word and list replaced
 - [x] make set of unique words not in the list, but in the app (when putting on storage)
-- [ ] refactor setting word func
-- [ ] re-arrange last searched words when there is a duplicate
+- [x] refactor setting word func
 - [ ] move api to service
 - [x] add stack bages into readme;
 
@@ -30,15 +29,21 @@
 - [ ] add favicon
 - [ ] add better logo (with image)
 - [ ] make Last Searched scrollable
-- [ ] fix issues with words like 'hey'
 
 ### Plans for v1.1.1
 - [ ] move to useReducer
+
+### Plans for v1.1.2
 - [ ] not reload if active word and clicked from last are equal
 - [ ] improve error handling
+- [ ] fix issues with words like 'hey'
+- [ ] re-arrange last searched words when there is a duplicate
 
 ### Plans for v2.0.0
 - [ ] add links to synonims and antonyms
 - [ ] add like btn to word and put liked words to a new page
 - [ ] add like btn to last words list
 - [ ] store list in the local storage
+
+### Plans for v2.0.1
+- [ ] move lists from local storage to IndexedDB
