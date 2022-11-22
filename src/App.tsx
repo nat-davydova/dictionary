@@ -71,19 +71,18 @@ function App() {
 
       if (!response.ok) {
         setCurrentWordState(WordState.ERROR);
-        if (responseToJson.message === "word not found") {
-          setError({
-            title: "Word not found",
-            message: "Try to search a new word",
-          });
 
-          return;
-        }
+        const ifNotFoundError = responseToJson.message === "word not found";
+        const errorTitle = ifNotFoundError ? "Word not found" : "";
+        const errorMessage = ifNotFoundError
+          ? "Try to search a new word"
+          : "Sorry, something is wrong. Wait 10 minutes, please, and try again";
 
         setError({
-          message:
-            "Sorry, something is wrong. Wait 10 minutes, please, and try again",
+          title: errorTitle,
+          message: errorMessage,
         });
+
         return;
       }
 
