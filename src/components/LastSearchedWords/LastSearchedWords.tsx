@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { v4 as uuid } from "uuid";
+import { getLastSearchedWords } from "../../utils";
 
 interface ILastSearchedWordsProps {
   onLastSearchedWordClickHandler: (word: string) => void;
@@ -15,9 +16,7 @@ interface ILastSearchedWordsProps {
 export function LastSearchedWords({
   onLastSearchedWordClickHandler,
 }: ILastSearchedWordsProps) {
-  const lastSearchedWordsStringified =
-    window.localStorage.getItem("lastSearchedWords");
-  const lastSearchedWords = lastSearchedWordsStringified?.split(",");
+  const lastSearchedWords = getLastSearchedWords();
 
   return (
     <>

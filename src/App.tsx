@@ -8,7 +8,7 @@ import {
   WordContainer,
   WordWrapper,
 } from "./App.styles";
-import { mapResponseToInterface } from "./utils";
+import { mapResponseToInterface, setLastSearchedWord } from "./utils";
 import { IWord } from "./types";
 import { Footer } from "./components/Footer";
 import { SearchBar } from "./components/SearchBar";
@@ -49,7 +49,6 @@ function App() {
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
-  const [, setLastSearchedWords] = useState<ILastSearchedWords>([]);
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -91,17 +90,7 @@ function App() {
       setCurrentWordState(WordState.SUCCESS);
       const mappedResponse = mapResponseToInterface(responseToJson);
       setCurrentWord(mappedResponse);
-      setLastSearchedWords(() => {
-        const prevWords =
-          window.localStorage.getItem("lastSearchedWords")?.split(",") || [];
-        const updatedWords = [...new Set([...prevWords, word])];
-        const updatedWordsStringified = updatedWords.join(",");
-        window.localStorage.setItem(
-          "lastSearchedWords",
-          updatedWordsStringified
-        );
-        return updatedWords;
-      });
+      setLastSearchedWord(word);
     } catch (e) {
       setCurrentWordState(WordState.ERROR);
       setError({
@@ -110,8 +99,6 @@ function App() {
       });
     }
   }
-
-  console.log(window.localStorage);
 
   async function onSearchSubmitHandler() {
     if (!searchQuery) {

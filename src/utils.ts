@@ -30,3 +30,20 @@ export function mapResponseToInterface(response: IResponse) {
 
   return mappedData;
 }
+
+export function getLastSearchedWords() {
+  const lastSearchedWordsStringified =
+    window.localStorage.getItem("lastSearchedWords");
+  return lastSearchedWordsStringified
+    ? lastSearchedWordsStringified.split(",")
+    : [];
+}
+
+export function setLastSearchedWord(word: string) {
+  const prevWords =
+    window.localStorage.getItem("lastSearchedWords")?.split(",") || [];
+  const updatedWords = [...new Set([...prevWords, word])];
+  const updatedWordsStringified = updatedWords.join(",");
+  window.localStorage.setItem("lastSearchedWords", updatedWordsStringified);
+  return updatedWords;
+}
