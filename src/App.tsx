@@ -92,7 +92,7 @@ function App() {
       const mappedResponse = mapResponseToInterface(responseToJson);
       setCurrentWord(mappedResponse);
       setLastSearchedWords((prevLastSearchedWords) => {
-        const updatedWords = [...prevLastSearchedWords, word];
+        const updatedWords = [...new Set([...prevLastSearchedWords, word])];
         const updatedWordsStringified = updatedWords.join(",");
         window.localStorage.setItem(
           "lastSearchedWords",
@@ -108,6 +108,8 @@ function App() {
       });
     }
   }
+
+  console.log(window.localStorage);
 
   async function onSearchSubmitHandler() {
     if (!searchQuery) {

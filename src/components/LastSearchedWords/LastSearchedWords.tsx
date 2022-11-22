@@ -18,7 +18,6 @@ export function LastSearchedWords({
   const lastSearchedWordsStringified =
     window.localStorage.getItem("lastSearchedWords");
   const lastSearchedWords = lastSearchedWordsStringified?.split(",");
-  const uniqueSearchedWords = [...new Set(lastSearchedWords)];
 
   return (
     <>
@@ -26,17 +25,18 @@ export function LastSearchedWords({
         Last Searched
       </Typography>
       <List>
-        {uniqueSearchedWords
-          .map((word) => (
-            <ListItem disablePadding key={uuid()}>
-              <ListItemButton
-                onClick={() => onLastSearchedWordClickHandler(word)}
-              >
-                <ListItemText primary={word} />
-              </ListItemButton>
-            </ListItem>
-          ))
-          .reverse()}
+        {lastSearchedWords &&
+          lastSearchedWords
+            .map((word) => (
+              <ListItem disablePadding key={uuid()}>
+                <ListItemButton
+                  onClick={() => onLastSearchedWordClickHandler(word)}
+                >
+                  <ListItemText primary={word} />
+                </ListItemButton>
+              </ListItem>
+            ))
+            .reverse()}
       </List>
     </>
   );
