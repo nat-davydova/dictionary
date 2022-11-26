@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IError } from "../types";
 
 export enum LoadingState {
   INITIAL = "initial",
@@ -9,12 +10,16 @@ export enum LoadingState {
 
 interface useHTTP {
   loadingState: LoadingState;
+  errorOfHTTPRequest: IError | null;
 }
 
 export function useHTTP(): useHTTP {
   const [loadingState, setLoadingState] = useState<LoadingState>(
     LoadingState.INITIAL
   );
+  const [errorOfHTTPRequest, setErrorOfHTTPRequest] = useState<IError | null>(
+    null
+  );
 
-  return { loadingState };
+  return { loadingState, errorOfHTTPRequest };
 }

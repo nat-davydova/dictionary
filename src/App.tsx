@@ -9,7 +9,7 @@ import {
   WordWrapper,
 } from "./App.styles";
 import { mapResponseToInterface, setLastSearchedWord } from "./utils";
-import { IWord } from "./types";
+import { IWord, IError } from "./types";
 import { Footer } from "./components/Footer";
 import { SearchBar } from "./components/SearchBar";
 import { Loader } from "./components/Loader";
@@ -27,11 +27,6 @@ const options = {
   },
 };
 
-export interface IError {
-  title?: string;
-  message: string;
-}
-
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentWord, setCurrentWord] = useState<IWord | null>(null);
@@ -41,8 +36,8 @@ function App() {
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
-  const { loadingState } = useHTTP();
-  console.log(loadingState);
+  const { loadingState, errorOfHTTPRequest } = useHTTP();
+  console.log({ loadingState, errorOfHTTPRequest });
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
