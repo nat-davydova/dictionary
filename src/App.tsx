@@ -17,8 +17,7 @@ import { ErrorNotification } from "./components/ErrorNotification";
 import { CurrentWord } from "./components/CurrentWord";
 import { Navbar } from "./components/Navbar";
 import { LastSearchedWords } from "./components/LastSearchedWords";
-import { LoadingState } from "./consts";
-import { useHTTP } from "./hooks/useHTTP";
+import { useHTTP, LoadingState } from "./hooks/useHTTP";
 
 const options = {
   method: "GET",
