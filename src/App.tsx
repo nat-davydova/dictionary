@@ -41,8 +41,8 @@ function App() {
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
-  const { wow } = useHTTP();
-  console.log(wow);
+  const { loadingState } = useHTTP();
+  console.log(loadingState);
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>

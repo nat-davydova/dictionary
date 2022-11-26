@@ -7,10 +7,14 @@ export enum LoadingState {
   ERROR = "error",
 }
 
-export function useHTTP() {
+interface useHTTP {
+  loadingState: LoadingState;
+}
+
+export function useHTTP(): useHTTP {
   const [loadingState, setLoadingState] = useState<LoadingState>(
     LoadingState.INITIAL
   );
 
-  return { wow: "wow" };
+  return { loadingState };
 }
