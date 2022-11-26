@@ -18,6 +18,7 @@ import { CurrentWord } from "./components/CurrentWord";
 import { Navbar } from "./components/Navbar";
 import { LastSearchedWords } from "./components/LastSearchedWords";
 import { LoadingState } from "./consts";
+import { useHTTP } from "./hooks/useHTTP";
 
 const options = {
   method: "GET",
@@ -41,6 +42,8 @@ function App() {
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
+  const { wow } = useHTTP();
+  console.log(wow);
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
