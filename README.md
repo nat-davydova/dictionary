@@ -20,6 +20,7 @@
 - [x] fix error when on first app load click on word and list replaced
 - [x] make set of unique words not in the list, but in the app (when putting on storage)
 - [x] refactor setting word func
+- [ ] add useHTTP hook
 - [ ] move api to service
 - [x] add stack bages into readme;
 
