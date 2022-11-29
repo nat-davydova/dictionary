@@ -8,12 +8,25 @@ export enum LoadingState {
   ERROR = "error",
 }
 
-interface useHTTP {
-  loadingState: LoadingState;
-  errorOfHTTPRequest: IError | null;
+export enum HTTPMethod {
+  GET = "GET",
+  POST = "POST",
 }
 
-export function useHTTP(): useHTTP {
+interface IDoHTTPRequest {
+  url: string;
+  method?: HTTPMethod;
+  headers?: Record<string, string>;
+  body?: string | null;
+}
+
+interface IUseHTTP {
+  loadingState: LoadingState;
+  errorOfHTTPRequest: IError | null;
+  doHTTPRequest: (arg: IDoHTTPRequest) => void;
+}
+
+export function useHTTP(): IUseHTTP {
   const [loadingState, setLoadingState] = useState<LoadingState>(
     LoadingState.INITIAL
   );
@@ -21,5 +34,14 @@ export function useHTTP(): useHTTP {
     null
   );
 
-  return { loadingState, errorOfHTTPRequest };
+  async function doHTTPRequest({
+    url,
+    method = HTTPMethod.GET,
+    headers = { "Content-type": "application/JSON" },
+    body = null,
+  }: IDoHTTPRequest) {
+    console.log(url, method, headers, body);
+  }
+
+  return { loadingState, errorOfHTTPRequest, doHTTPRequest };
 }

@@ -17,11 +17,12 @@ import { ErrorNotification } from "./components/ErrorNotification";
 import { CurrentWord } from "./components/CurrentWord";
 import { Navbar } from "./components/Navbar";
 import { LastSearchedWords } from "./components/LastSearchedWords";
-import { useHTTP, LoadingState } from "./hooks/useHTTP";
+import { useHTTP, LoadingState, HTTPMethod } from "./hooks/useHTTP";
 
 const options = {
-  method: "GET",
+  method: HTTPMethod.GET,
   headers: {
+    "Content-type": "application/JSON",
     "X-RapidAPI-Key": import.meta.env.VITE_WORDS_API_KEY,
     "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com",
   },
@@ -36,8 +37,12 @@ function App() {
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
-  const { loadingState, errorOfHTTPRequest } = useHTTP();
-  console.log({ loadingState, errorOfHTTPRequest });
+  const { loadingState, errorOfHTTPRequest, doHTTPRequest } = useHTTP();
+  console.log({
+    loadingState,
+    errorOfHTTPRequest,
+    request: doHTTPRequest({ url: "wow", ...options }),
+  });
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
