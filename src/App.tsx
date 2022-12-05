@@ -18,6 +18,7 @@ import { CurrentWord } from "./components/CurrentWord";
 import { Navbar } from "./components/Navbar";
 import { LastSearchedWords } from "./components/LastSearchedWords";
 import { useHTTP, LoadingState, HTTPMethod } from "./hooks/useHTTP";
+import { DEFAULT_ERROR, SEARCH_EMPTY_ERROR } from "./errors/errors";
 
 const options = {
   method: HTTPMethod.GET,
@@ -48,10 +49,10 @@ function App() {
   console.log(loadingState);
   async function testHTTP() {
     const data = await doHTTPRequest({
-      url: "https://wordsapiv1.p.rapidapi.com/words/cat",
+      url: "https://wordsapiv1.p.rapidapi.com/words/cadddt",
       ...options,
     });
-    console.log(loadingState);
+    console.log({ data, loadingState, errorOfHTTPRequest });
   }
 
   async function getWordFromApi(word: string) {
@@ -90,19 +91,13 @@ function App() {
       setLastSearchedWord(word);
     } catch (e) {
       setCurrentWordState(LoadingState.ERROR);
-      setError({
-        message:
-          "Sorry, something is wrong. Wait 10 minutes, please, and try again",
-      });
+      setError(DEFAULT_ERROR);
     }
   }
 
   async function onSearchSubmitHandler() {
     if (!searchQuery) {
-      setError({
-        title: "Search field is empty",
-        message: "Try to type a word in it and search then",
-      });
+      setError(SEARCH_EMPTY_ERROR);
       return;
     }
 

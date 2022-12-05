@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { IError } from "../types";
+import {
+  appErrorsFromAPIMap,
+  DEFAULT_ERROR,
+  WORD_NOT_FOUND_ERROR,
+} from "../errors";
 
 export enum LoadingState {
   INITIAL = "initial",
@@ -40,16 +45,27 @@ export function useHTTP(): IUseHTTP {
     headers = { "Content-type": "application/JSON" },
     body = null,
   }: IDoHTTPRequest) {
+    setErrorOfHTTPRequest(null);
     setLoadingState(LoadingState.LOADING);
 
     try {
       const response = await fetch(url, { method, headers, body });
       const data = await response.json();
+
+      if (!response.ok) {
+        setLoadingState(LoadingState.ERROR);
+        if (appErrorsFromAPIMap[data.message]) {
+          setErrorOfHTTPRequest(WORD_NOT_FOUND_ERROR);
+        } else {
+          setErrorOfHTTPRequest(DEFAULT_ERROR);
+        }
+      }
+
       setLoadingState(LoadingState.SUCCESS);
       return data;
     } catch (e) {
-      console.log(e);
       setLoadingState(LoadingState.ERROR);
+      setErrorOfHTTPRequest(DEFAULT_ERROR);
       return e;
     }
   }
