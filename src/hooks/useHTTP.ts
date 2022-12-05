@@ -40,7 +40,18 @@ export function useHTTP(): IUseHTTP {
     headers = { "Content-type": "application/JSON" },
     body = null,
   }: IDoHTTPRequest) {
-    console.log(url, method, headers, body);
+    setLoadingState(LoadingState.LOADING);
+
+    try {
+      const response = await fetch(url, { method, headers, body });
+      const data = await response.json();
+      setLoadingState(LoadingState.SUCCESS);
+      return data;
+    } catch (e) {
+      console.log(e);
+      setLoadingState(LoadingState.ERROR);
+      return e;
+    }
   }
 
   return { loadingState, errorOfHTTPRequest, doHTTPRequest };

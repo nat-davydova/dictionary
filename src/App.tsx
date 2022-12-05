@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import React, { useState } from "react";
-import { Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import {
   AppWrapper,
@@ -38,16 +38,20 @@ function App() {
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
   const { loadingState, errorOfHTTPRequest, doHTTPRequest } = useHTTP();
-  console.log({
-    loadingState,
-    errorOfHTTPRequest,
-    request: doHTTPRequest({ url: "wow", ...options }),
-  });
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
   ): void {
     setSearchQuery(event.target.value);
+  }
+
+  console.log(loadingState);
+  async function testHTTP() {
+    const data = await doHTTPRequest({
+      url: "https://wordsapiv1.p.rapidapi.com/words/cat",
+      ...options,
+    });
+    console.log(loadingState);
   }
 
   async function getWordFromApi(word: string) {
@@ -138,6 +142,7 @@ function App() {
               )}
             </Grid>
             <Grid item xs={8} sm={4} md={3}>
+              <Button onClick={testHTTP}>Click Me</Button>
               <aside>
                 <LastSearchedWords
                   onLastSearchedWordClickHandler={getWordFromApi}
