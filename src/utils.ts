@@ -1,7 +1,7 @@
 import { IWord, IWordDefinition } from "./types";
 import { LocalStorageFields } from "./consts";
 
-interface IResponse {
+export interface IResponse {
   pronunciation: {
     all: string;
   };

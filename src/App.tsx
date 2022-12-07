@@ -51,12 +51,11 @@ function App() {
       ...options,
     });
 
-    if (!errorOfHTTPRequest) {
-      // @ts-ignore
+    if (data && !errorOfHTTPRequest) {
       const mappedData = mapResponseToInterface(data);
       setCurrentWord(mappedData);
       setLastSearchedWord(word);
-    } else {
+    } else if (errorOfHTTPRequest) {
       console.log(errorOfHTTPRequest);
       setError(errorOfHTTPRequest);
     }

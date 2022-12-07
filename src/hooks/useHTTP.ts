@@ -6,6 +6,8 @@ import {
   WORD_NOT_FOUND_ERROR,
 } from "../errors";
 
+import { IResponse } from "../utils";
+
 export enum LoadingState {
   INITIAL = "initial",
   LOADING = "loading",
@@ -28,7 +30,7 @@ interface IDoHTTPRequest {
 interface IUseHTTP {
   loadingState: LoadingState;
   errorOfHTTPRequest: IError | null;
-  doHTTPRequest: (arg: IDoHTTPRequest) => void;
+  doHTTPRequest: (arg: IDoHTTPRequest) => Promise<IResponse | null>;
 }
 
 export function useHTTP(): IUseHTTP {
@@ -64,10 +66,10 @@ export function useHTTP(): IUseHTTP {
       }
 
       return data;
-    } catch (e) {
+    } catch (error) {
       setLoadingState(LoadingState.ERROR);
       setErrorOfHTTPRequest(DEFAULT_ERROR);
-      return e;
+      return null;
     }
   }
 
