@@ -23,6 +23,7 @@
 - [ ] add useHTTP hook
 - [ ] move api to service
 - [x] add stack bages into readme;
+- [ ] add better error handling (func which mapps error msg to error type)
 
 ### Plans for v1.1.0
 - [ ] add clear last words btn
