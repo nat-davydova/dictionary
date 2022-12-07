@@ -51,17 +51,18 @@ export function useHTTP(): IUseHTTP {
     try {
       const response = await fetch(url, { method, headers, body });
       const data = await response.json();
+      setLoadingState(LoadingState.SUCCESS);
 
       if (!response.ok) {
         setLoadingState(LoadingState.ERROR);
-        if (appErrorsFromAPIMap[data.message]) {
+
+        if (data.message === appErrorsFromAPIMap.word_not_found) {
           setErrorOfHTTPRequest(WORD_NOT_FOUND_ERROR);
         } else {
           setErrorOfHTTPRequest(DEFAULT_ERROR);
         }
       }
 
-      setLoadingState(LoadingState.SUCCESS);
       return data;
     } catch (e) {
       setLoadingState(LoadingState.ERROR);

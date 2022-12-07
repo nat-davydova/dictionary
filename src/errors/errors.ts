@@ -1,6 +1,6 @@
 import { IError } from "../types";
 
-export const appErrorsFromAPIMap: Record<string, string> = {
+export const appErrorsFromAPIMap = {
   word_not_found: "word not found",
 };
 

@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import React, { useState } from "react";
-import { Button, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import {
   AppWrapper,
@@ -18,7 +18,7 @@ import { CurrentWord } from "./components/CurrentWord";
 import { Navbar } from "./components/Navbar";
 import { LastSearchedWords } from "./components/LastSearchedWords";
 import { useHTTP, LoadingState, HTTPMethod } from "./hooks/useHTTP";
-import { DEFAULT_ERROR, SEARCH_EMPTY_ERROR } from "./errors/errors";
+import { SEARCH_EMPTY_ERROR } from "./errors";
 
 const options = {
   method: HTTPMethod.GET,
@@ -32,9 +32,6 @@ const options = {
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentWord, setCurrentWord] = useState<IWord | null>(null);
-  const [currentWordState, setCurrentWordState] = useState<LoadingState>(
-    LoadingState.INITIAL
-  );
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
@@ -46,52 +43,22 @@ function App() {
     setSearchQuery(event.target.value);
   }
 
-  console.log(loadingState);
-  async function testHTTP() {
-    const data = await doHTTPRequest({
-      url: "https://wordsapiv1.p.rapidapi.com/words/cadddt",
-      ...options,
-    });
-    console.log({ data, loadingState, errorOfHTTPRequest });
-  }
-
   async function getWordFromApi(word: string) {
     setIsContentContainerVisible(true);
-    setCurrentWordState(LoadingState.LOADING);
-    setError(null);
 
-    try {
-      const response = await fetch(
-        `https://wordsapiv1.p.rapidapi.com/words/${word}`,
-        options
-      );
+    const data = await doHTTPRequest({
+      url: `https://wordsapiv1.p.rapidapi.com/words/${word}`,
+      ...options,
+    });
 
-      const responseToJson = await response.json();
-
-      if (!response.ok) {
-        setCurrentWordState(LoadingState.ERROR);
-
-        const ifNotFoundError = responseToJson.message === "word not found";
-        const errorTitle = ifNotFoundError ? "Word not found" : "";
-        const errorMessage = ifNotFoundError
-          ? "Try to search a new word"
-          : "Sorry, something is wrong. Wait 10 minutes, please, and try again";
-
-        setError({
-          title: errorTitle,
-          message: errorMessage,
-        });
-
-        return;
-      }
-
-      setCurrentWordState(LoadingState.SUCCESS);
-      const mappedResponse = mapResponseToInterface(responseToJson);
-      setCurrentWord(mappedResponse);
+    if (!errorOfHTTPRequest) {
+      // @ts-ignore
+      const mappedData = mapResponseToInterface(data);
+      setCurrentWord(mappedData);
       setLastSearchedWord(word);
-    } catch (e) {
-      setCurrentWordState(LoadingState.ERROR);
-      setError(DEFAULT_ERROR);
+    } else {
+      console.log(errorOfHTTPRequest);
+      setError(errorOfHTTPRequest);
     }
   }
 
@@ -126,10 +93,10 @@ function App() {
             <Grid item xs={12} sm={8} md={9} className={WordContainer}>
               {isContentContainerVisible && (
                 <Paper className={WordWrapper}>
-                  {currentWordState === LoadingState.LOADING && <Loader />}
+                  {loadingState === LoadingState.LOADING && <Loader />}
                   {error && <ErrorNotification error={error} />}
                   {!error &&
-                    currentWordState === LoadingState.SUCCESS &&
+                    loadingState === LoadingState.SUCCESS &&
                     currentWord?.word && (
                       <CurrentWord currentWord={currentWord} />
                     )}
@@ -137,7 +104,6 @@ function App() {
               )}
             </Grid>
             <Grid item xs={8} sm={4} md={3}>
-              <Button onClick={testHTTP}>Click Me</Button>
               <aside>
                 <LastSearchedWords
                   onLastSearchedWordClickHandler={getWordFromApi}
