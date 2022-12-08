@@ -9,13 +9,13 @@ export interface IResponse {
   results: IWordDefinition[];
 }
 
-export function mapResponseToInterface(response: IResponse) {
+export function mapResponseToInterface(response: IResponse | null) {
   const mappedData: IWord = {
     word: "",
   };
 
   mappedData.transcription = response?.pronunciation?.all;
-  mappedData.word = response?.word;
+  mappedData.word = response ? response.word : "";
 
   mappedData.definitions = response?.results?.map(
     (definition: IWordDefinition) => {
@@ -41,6 +41,7 @@ export function getLastSearchedWords() {
     : [];
 }
 
+// TODO сменить нафиг имя, чтоб не путать с хуком
 export function setLastSearchedWord(word: string) {
   const prevWords =
     window.localStorage

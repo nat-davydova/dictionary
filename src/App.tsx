@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import {
@@ -8,7 +8,11 @@ import {
   WordContainer,
   WordWrapper,
 } from "./App.styles";
-import { mapResponseToInterface, setLastSearchedWord } from "./utils";
+import {
+  IResponse,
+  mapResponseToInterface,
+  setLastSearchedWord,
+} from "./utils";
 import { IWord, IError } from "./types";
 import { Footer } from "./components/Footer";
 import { SearchBar } from "./components/SearchBar";
@@ -31,11 +35,19 @@ const options = {
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [currentWord, setCurrentWord] = useState<IWord | null>(null);
   const [error, setError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
-  const { loadingState, errorOfHTTPRequest, doHTTPRequest } = useHTTP();
+  const { data, loadingState, errorOfHTTPRequest, doHTTPRequest } =
+    useHTTP<IResponse>();
+
+  // TODO сделать кастомный хук с локал стораджем и сюда его воткнуть с обновлением стейта
+  useEffect(() => {
+    console.log(data);
+    if (data?.word) {
+      setLastSearchedWord(data?.word);
+    }
+  }, [data?.word]);
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -45,20 +57,12 @@ function App() {
 
   async function getWordFromApi(word: string) {
     setIsContentContainerVisible(true);
+    setError(null);
 
-    const data = await doHTTPRequest({
+    await doHTTPRequest({
       url: `https://wordsapiv1.p.rapidapi.com/words/${word}`,
       ...options,
     });
-
-    if (data && !errorOfHTTPRequest) {
-      const mappedData = mapResponseToInterface(data);
-      setCurrentWord(mappedData);
-      setLastSearchedWord(word);
-    } else if (errorOfHTTPRequest) {
-      console.log(errorOfHTTPRequest);
-      setError(errorOfHTTPRequest);
-    }
   }
 
   async function onSearchSubmitHandler() {
@@ -96,8 +100,8 @@ function App() {
                   {error && <ErrorNotification error={error} />}
                   {!error &&
                     loadingState === LoadingState.SUCCESS &&
-                    currentWord?.word && (
-                      <CurrentWord currentWord={currentWord} />
+                    mapResponseToInterface(data)?.word && (
+                      <CurrentWord currentWord={mapResponseToInterface(data)} />
                     )}
                 </Paper>
               )}
