@@ -1,7 +1,7 @@
 import { IWord, IWordDefinition } from "./types";
 import { LocalStorageFields } from "./consts";
 
-export interface IResponse {
+export interface IWordResponse {
   pronunciation: {
     all: string;
   };
@@ -9,7 +9,7 @@ export interface IResponse {
   results: IWordDefinition[];
 }
 
-export function mapResponseToInterface(response: IResponse | null) {
+export function mapWordDataToInterface(response: IWordResponse | null) {
   const mappedData: IWord = {
     word: "",
   };

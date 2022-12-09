@@ -9,8 +9,8 @@ import {
   WordWrapper,
 } from "./App.styles";
 import {
-  IResponse,
-  mapResponseToInterface,
+  IWordResponse,
+  mapWordDataToInterface,
   putLastSearchedWord,
 } from "./utils";
 import { IError } from "./types";
@@ -39,7 +39,7 @@ function App() {
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
   const { data, loadingState, HTTPRequestError, doHTTPRequest } =
-    useHTTP<IResponse>();
+    useHTTP<IWordResponse>();
 
   const isError = Boolean(emptySearchError || HTTPRequestError);
   const isWord = data?.word;
@@ -112,7 +112,7 @@ function App() {
                   {!isError &&
                     loadingState === LoadingState.SUCCESS &&
                     isWord && (
-                      <CurrentWord currentWord={mapResponseToInterface(data)} />
+                      <CurrentWord currentWord={mapWordDataToInterface(data)} />
                     )}
                 </Paper>
               )}
