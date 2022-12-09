@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import {
@@ -41,13 +41,8 @@ function App() {
   const { data, loadingState, HTTPRequestError, doHTTPRequest } =
     useHTTP<IResponse>();
 
-  // TODO сделать кастомный хук с локал стораджем и сюда его воткнуть с обновлением стейта
-  useEffect(() => {
-    console.log(data);
-    if (data?.word) {
-      setLastSearchedWord(data?.word);
-    }
-  }, [data?.word]);
+  const isError = Boolean(emptySearchError || HTTPRequestError);
+  const isWord = data?.word;
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -55,11 +50,12 @@ function App() {
     setSearchQuery(event.target.value);
   }
 
-  async function getWordFromApi(word: string) {
+  async function getWordFromApi(currentWord: string) {
     setIsContentContainerVisible(true);
+    setEmptySearchError(null);
 
     await doHTTPRequest({
-      url: `https://wordsapiv1.p.rapidapi.com/words/${word}`,
+      url: `https://wordsapiv1.p.rapidapi.com/words/${currentWord}`,
       ...options,
     });
   }
@@ -80,7 +76,9 @@ function App() {
     }
   }
 
-  const isError = Boolean(emptySearchError || HTTPRequestError);
+  if (isWord) {
+    setLastSearchedWord(isWord);
+  }
 
   function renderErrorNotification() {
     if (emptySearchError) {
@@ -113,7 +111,7 @@ function App() {
                   {renderErrorNotification()}
                   {!isError &&
                     loadingState === LoadingState.SUCCESS &&
-                    mapResponseToInterface(data)?.word && (
+                    isWord && (
                       <CurrentWord currentWord={mapResponseToInterface(data)} />
                     )}
                 </Paper>
