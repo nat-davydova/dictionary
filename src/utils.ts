@@ -41,8 +41,7 @@ export function getLastSearchedWords() {
     : [];
 }
 
-// TODO сменить нафиг имя, чтоб не путать с хуком
-export function setLastSearchedWord(word: string) {
+export function putLastSearchedWord(word: string) {
   const prevWords =
     window.localStorage
       .getItem(LocalStorageFields.LAST_SEARCHED_WORDS)

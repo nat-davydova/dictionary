@@ -11,7 +11,7 @@ import {
 import {
   IResponse,
   mapResponseToInterface,
-  setLastSearchedWord,
+  putLastSearchedWord,
 } from "./utils";
 import { IError } from "./types";
 import { Footer } from "./components/Footer";
@@ -77,7 +77,7 @@ function App() {
   }
 
   if (isWord) {
-    setLastSearchedWord(isWord);
+    putLastSearchedWord(isWord);
   }
 
   function renderErrorNotification() {
