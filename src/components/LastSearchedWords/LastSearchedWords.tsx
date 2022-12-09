@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { v4 as uuid } from "uuid";
+import { getLastSearchedWords } from "../../utils";
 
 interface ILastSearchedWordsProps {
   onLastSearchedWordClickHandler: (word: string) => void;
@@ -15,10 +16,7 @@ interface ILastSearchedWordsProps {
 export function LastSearchedWords({
   onLastSearchedWordClickHandler,
 }: ILastSearchedWordsProps) {
-  const lastSearchedWordsStringified =
-    window.localStorage.getItem("lastSearchedWords");
-  const lastSearchedWords = lastSearchedWordsStringified?.split(",");
-  const uniqueSearchedWords = [...new Set(lastSearchedWords)];
+  const lastSearchedWords = getLastSearchedWords();
 
   return (
     <>
@@ -26,17 +24,18 @@ export function LastSearchedWords({
         Last Searched
       </Typography>
       <List>
-        {uniqueSearchedWords
-          .map((word) => (
-            <ListItem disablePadding key={uuid()}>
-              <ListItemButton
-                onClick={() => onLastSearchedWordClickHandler(word)}
-              >
-                <ListItemText primary={word} />
-              </ListItemButton>
-            </ListItem>
-          ))
-          .reverse()}
+        {lastSearchedWords &&
+          lastSearchedWords
+            .map((word) => (
+              <ListItem disablePadding key={uuid()}>
+                <ListItemButton
+                  onClick={() => onLastSearchedWordClickHandler(word)}
+                >
+                  <ListItemText primary={word} />
+                </ListItemButton>
+              </ListItem>
+            ))
+            .reverse()}
       </List>
     </>
   );

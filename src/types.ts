@@ -11,3 +11,8 @@ export interface IWord {
   transcription?: string;
   definitions?: IWordDefinition[];
 }
+
+export interface IError {
+  title?: string;
+  message: string;
+}

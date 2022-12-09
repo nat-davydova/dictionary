@@ -8,8 +8,12 @@ import {
   WordContainer,
   WordWrapper,
 } from "./App.styles";
-import { mapResponseToInterface } from "./utils";
-import { IWord } from "./types";
+import {
+  IWordResponse,
+  mapWordDataToInterface,
+  putLastSearchedWord,
+} from "./utils";
+import { IError } from "./types";
 import { Footer } from "./components/Footer";
 import { SearchBar } from "./components/SearchBar";
 import { Loader } from "./components/Loader";
@@ -17,39 +21,28 @@ import { ErrorNotification } from "./components/ErrorNotification";
 import { CurrentWord } from "./components/CurrentWord";
 import { Navbar } from "./components/Navbar";
 import { LastSearchedWords } from "./components/LastSearchedWords";
+import { useHTTP, LoadingState, HTTPMethod } from "./hooks/useHTTP";
+import { SEARCH_EMPTY_ERROR } from "./errors";
 
 const options = {
-  method: "GET",
+  method: HTTPMethod.GET,
   headers: {
+    "Content-type": "application/JSON",
     "X-RapidAPI-Key": import.meta.env.VITE_WORDS_API_KEY,
     "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com",
   },
 };
 
-export interface IError {
-  title?: string;
-  message: string;
-}
-
-export type ILastSearchedWords = Array<string>;
-
-enum WordState {
-  INITIAL = "initial",
-  LOADING = "loading",
-  SUCCESS = "success",
-  ERROR = "error",
-}
-
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [currentWord, setCurrentWord] = useState<IWord | null>(null);
-  const [currentWordState, setCurrentWordState] = useState<WordState>(
-    WordState.INITIAL
-  );
-  const [error, setError] = useState<IError | null>(null);
+  const [emptySearchError, setEmptySearchError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
-  const [, setLastSearchedWords] = useState<ILastSearchedWords>([]);
+  const { data, loadingState, HTTPRequestError, doHTTPRequest } =
+    useHTTP<IWordResponse>();
+
+  const isError = Boolean(emptySearchError || HTTPRequestError);
+  const isWord = data?.word;
 
   function onSearchInputHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -57,64 +50,19 @@ function App() {
     setSearchQuery(event.target.value);
   }
 
-  async function getWordFromApi(word: string) {
+  async function getWordFromApi(currentWord: string) {
     setIsContentContainerVisible(true);
-    setCurrentWordState(WordState.LOADING);
-    setError(null);
+    setEmptySearchError(null);
 
-    try {
-      const response = await fetch(
-        `https://wordsapiv1.p.rapidapi.com/words/${word}`,
-        options
-      );
-
-      const responseToJson = await response.json();
-
-      if (!response.ok) {
-        setCurrentWordState(WordState.ERROR);
-        if (responseToJson.message === "word not found") {
-          setError({
-            title: "Word not found",
-            message: "Try to search a new word",
-          });
-
-          return;
-        }
-
-        setError({
-          message:
-            "Sorry, something is wrong. Wait 10 minutes, please, and try again",
-        });
-        return;
-      }
-
-      setCurrentWordState(WordState.SUCCESS);
-      const mappedResponse = mapResponseToInterface(responseToJson);
-      setCurrentWord(mappedResponse);
-      setLastSearchedWords((prevLastSearchedWords) => {
-        const updatedWords = [...prevLastSearchedWords, word];
-        const updatedWordsStringified = updatedWords.join(",");
-        window.localStorage.setItem(
-          "lastSearchedWords",
-          updatedWordsStringified
-        );
-        return updatedWords;
-      });
-    } catch (e) {
-      setCurrentWordState(WordState.ERROR);
-      setError({
-        message:
-          "Sorry, something is wrong. Wait 10 minutes, please, and try again",
-      });
-    }
+    await doHTTPRequest({
+      url: `https://wordsapiv1.p.rapidapi.com/words/${currentWord}`,
+      ...options,
+    });
   }
 
   async function onSearchSubmitHandler() {
     if (!searchQuery) {
-      setError({
-        title: "Search field is empty",
-        message: "Try to type a word in it and search then",
-      });
+      setEmptySearchError(SEARCH_EMPTY_ERROR);
       return;
     }
 
@@ -126,6 +74,22 @@ function App() {
     if (event.key === "Enter") {
       onSearchSubmitHandler();
     }
+  }
+
+  if (isWord) {
+    putLastSearchedWord(isWord);
+  }
+
+  function renderErrorNotification() {
+    if (emptySearchError) {
+      return <ErrorNotification error={emptySearchError} />;
+    }
+
+    if (HTTPRequestError) {
+      return <ErrorNotification error={HTTPRequestError} />;
+    }
+
+    return <></>;
   }
 
   return (
@@ -143,12 +107,12 @@ function App() {
             <Grid item xs={12} sm={8} md={9} className={WordContainer}>
               {isContentContainerVisible && (
                 <Paper className={WordWrapper}>
-                  {currentWordState === WordState.LOADING && <Loader />}
-                  {error && <ErrorNotification error={error} />}
-                  {!error &&
-                    currentWordState === WordState.SUCCESS &&
-                    currentWord?.word && (
-                      <CurrentWord currentWord={currentWord} />
+                  {loadingState === LoadingState.LOADING && <Loader />}
+                  {renderErrorNotification()}
+                  {!isError &&
+                    loadingState === LoadingState.SUCCESS &&
+                    isWord && (
+                      <CurrentWord currentWord={mapWordDataToInterface(data)} />
                     )}
                 </Paper>
               )}
