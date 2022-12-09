@@ -28,7 +28,7 @@ interface IDoHTTPRequest {
 interface IUseHTTP<T> {
   data: T | null;
   loadingState: LoadingState;
-  errorOfHTTPRequest: IError | null;
+  HTTPRequestError: IError | null;
   doHTTPRequest: (arg: IDoHTTPRequest) => Promise<void>;
 }
 
@@ -36,9 +36,7 @@ export function useHTTP<T>(): IUseHTTP<T> {
   const [loadingState, setLoadingState] = useState<LoadingState>(
     LoadingState.INITIAL
   );
-  const [errorOfHTTPRequest, setErrorOfHTTPRequest] = useState<IError | null>(
-    null
-  );
+  const [HTTPRequestError, setHTTPRequestError] = useState<IError | null>(null);
   const [data, setData] = useState<T | null>(null);
 
   async function doHTTPRequest({
@@ -47,7 +45,7 @@ export function useHTTP<T>(): IUseHTTP<T> {
     headers = { "Content-type": "application/JSON" },
     body = null,
   }: IDoHTTPRequest) {
-    setErrorOfHTTPRequest(null);
+    setHTTPRequestError(null);
     setLoadingState(LoadingState.LOADING);
 
     try {
@@ -59,18 +57,18 @@ export function useHTTP<T>(): IUseHTTP<T> {
         setLoadingState(LoadingState.ERROR);
 
         if (responseToJson.message === appErrorsFromAPIMap.word_not_found) {
-          setErrorOfHTTPRequest(WORD_NOT_FOUND_ERROR);
+          setHTTPRequestError(WORD_NOT_FOUND_ERROR);
         } else {
-          setErrorOfHTTPRequest(DEFAULT_ERROR);
+          setHTTPRequestError(DEFAULT_ERROR);
         }
       }
 
       setData(responseToJson);
     } catch (error) {
       setLoadingState(LoadingState.ERROR);
-      setErrorOfHTTPRequest(DEFAULT_ERROR);
+      setHTTPRequestError(DEFAULT_ERROR);
     }
   }
 
-  return { data, loadingState, errorOfHTTPRequest, doHTTPRequest };
+  return { data, loadingState, HTTPRequestError, doHTTPRequest };
 }

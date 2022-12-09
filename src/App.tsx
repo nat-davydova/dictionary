@@ -13,7 +13,7 @@ import {
   mapResponseToInterface,
   setLastSearchedWord,
 } from "./utils";
-import { IWord, IError } from "./types";
+import { IError } from "./types";
 import { Footer } from "./components/Footer";
 import { SearchBar } from "./components/SearchBar";
 import { Loader } from "./components/Loader";
@@ -38,7 +38,7 @@ function App() {
   const [emptySearchError, setEmptySearchError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
-  const { data, loadingState, errorOfHTTPRequest, doHTTPRequest } =
+  const { data, loadingState, HTTPRequestError, doHTTPRequest } =
     useHTTP<IResponse>();
 
   // TODO сделать кастомный хук с локал стораджем и сюда его воткнуть с обновлением стейта
@@ -80,15 +80,15 @@ function App() {
     }
   }
 
-  const isError = Boolean(emptySearchError || errorOfHTTPRequest);
+  const isError = Boolean(emptySearchError || HTTPRequestError);
 
   function renderErrorNotification() {
     if (emptySearchError) {
       return <ErrorNotification error={emptySearchError} />;
     }
 
-    if (errorOfHTTPRequest) {
-      return <ErrorNotification error={errorOfHTTPRequest} />;
+    if (HTTPRequestError) {
+      return <ErrorNotification error={HTTPRequestError} />;
     }
 
     return <></>;
