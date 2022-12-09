@@ -35,7 +35,7 @@ const options = {
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [error, setError] = useState<IError | null>(null);
+  const [emptySearchError, setEmptySearchError] = useState<IError | null>(null);
   const [isContentContainerVisible, setIsContentContainerVisible] =
     useState<boolean>(false);
   const { data, loadingState, errorOfHTTPRequest, doHTTPRequest } =
@@ -57,7 +57,6 @@ function App() {
 
   async function getWordFromApi(word: string) {
     setIsContentContainerVisible(true);
-    setError(null);
 
     await doHTTPRequest({
       url: `https://wordsapiv1.p.rapidapi.com/words/${word}`,
@@ -67,7 +66,7 @@ function App() {
 
   async function onSearchSubmitHandler() {
     if (!searchQuery) {
-      setError(SEARCH_EMPTY_ERROR);
+      setEmptySearchError(SEARCH_EMPTY_ERROR);
       return;
     }
 
@@ -79,6 +78,20 @@ function App() {
     if (event.key === "Enter") {
       onSearchSubmitHandler();
     }
+  }
+
+  const isError = Boolean(emptySearchError || errorOfHTTPRequest);
+
+  function renderErrorNotification() {
+    if (emptySearchError) {
+      return <ErrorNotification error={emptySearchError} />;
+    }
+
+    if (errorOfHTTPRequest) {
+      return <ErrorNotification error={errorOfHTTPRequest} />;
+    }
+
+    return <></>;
   }
 
   return (
@@ -97,8 +110,8 @@ function App() {
               {isContentContainerVisible && (
                 <Paper className={WordWrapper}>
                   {loadingState === LoadingState.LOADING && <Loader />}
-                  {error && <ErrorNotification error={error} />}
-                  {!error &&
+                  {renderErrorNotification()}
+                  {!isError &&
                     loadingState === LoadingState.SUCCESS &&
                     mapResponseToInterface(data)?.word && (
                       <CurrentWord currentWord={mapResponseToInterface(data)} />
